@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from python.user.signUp import signUpProcess
 from datetime import datetime, timedelta
 import jwt
 
@@ -13,6 +14,14 @@ SECRET_KEY = 'SPARTA'
 @app.route('/')
 def home():
     return render_template('index.html')
+
+
+@app.route('/api/user/signUp', methods=["POST"])
+def signUp():
+    user = request.get_json()
+
+    msg = signUpProcess(user['id'], user['pw'], user['nickName'])
+    return jsonify(msg)
 
 @app.route('/signin')
 def signin():
