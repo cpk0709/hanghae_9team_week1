@@ -25,8 +25,8 @@
             type: "POST",
             url: "/api/user/signIn",
             data: {
-                id_give: id,
-                pw_give: pw
+                id: id,
+                pw: pw
             },
             success: function (response) {
                 if (response['result'] == 'success') {
