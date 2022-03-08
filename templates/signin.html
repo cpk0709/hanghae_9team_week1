@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <link rel="stylesheet" href="../static/signin.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 </head>
@@ -47,10 +50,28 @@
     }
 </script>
 <body>
+<div class="back-gr">
+    <div class="signin-wrap">
+        <div>
+            <h1>우리 스케줄관리,<br> 어디서할까?</h1>
+        </div>
+        <div>
+            <div class="logo">
+                <i class="xi-night"></i>
+                <span>UR SCHEDULE</span>
+            </div>
+            <div class="input-wrap">
+                <input id="id" class="input" type="text" placeholder="아이디">
+                <input id="pw" class="input" type="password" placeholder="비밀번호">
+                <div class="btn-wrap">
+                    <button onclick="signIn()">로그인</button>
+                    <button onclick="">회원가입</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<input id="id" class="input" type="text" placeholder="아이디">
-<input id="pw" class="input" type="password" placeholder="비밀번호">
-<button onclick="signIn()">로그인</button>
 
 </body>
 </html>

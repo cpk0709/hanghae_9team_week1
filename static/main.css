@@ -43,6 +43,15 @@ input:focus{
     margin: 0 2rem;
 }
 
+.logo > a {
+    color: #d6b98c;
+}
+
+.logo > a > span{
+    display: inline-block;
+    transform: translateX(-13px);
+}
+
 .user-menu{
     width: 15%;
     display: flex;

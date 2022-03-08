@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 end: '2022-03-05'
             },
             {
-                title: 'event3',
+                title: '대통령선거',
                 start: '2022-03-09T12:30:00',
                 allDay: false // will make the time show
             }
