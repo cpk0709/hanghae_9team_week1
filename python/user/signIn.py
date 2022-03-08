@@ -17,6 +17,7 @@ def signInProcess(id, pw):
 
     # 해시 암호화시
     pw = hashlib.sha256(pw.encode('utf-8')).hexdigest()
+
     # DB에서 유저 찾기(없으면 None)
     result = db.user.find_one({'id': id, 'pw': pw})
     _id = str(result['_id'])
