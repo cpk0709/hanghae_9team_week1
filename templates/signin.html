@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 </head>
 <script>
-    function signin() {
+    function signIn() {
         let id = $("#id").val()
         let pw = $("#pw").val()
 
@@ -29,13 +29,15 @@
                 pw: pw
             },
             success: function (response) {
+                console.log(response)
                 if (response['result'] == 'success') {
                     //토큰: 검증된 사람 ID, 유효시간
                     //토큰을 받아서 브라우저의 쿠키에 저장, 이후 요청을 보낼때 계속 딸려감
                     console.log('로그인성공')
-                    $.cookie('mytoken', response['token'], {path: '/'});
+                    $.cookie('myToken', response['token'], {path: '/'});
+                    $.cookie('calendarId', response['calendarId'], {path: '/'});
                     alert(response['msg'])
-                    {#window.location.replace("/")#}
+                    window.location.replace("/")
                 } else {
                     console.log('로그인실패')
                     alert(response['msg'])
@@ -48,7 +50,7 @@
 
 <input id="id" class="input" type="text" placeholder="아이디">
 <input id="pw" class="input" type="password" placeholder="비밀번호">
-<button onclick="signin()">로그인</button>
+<button onclick="signIn()">로그인</button>
 
 </body>
 </html>

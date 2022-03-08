@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from python.user.signUp import signUpProcess
 from python.user.signIn import signInProcess
-from datetime import datetime, timedelta
-import jwt
+from python.user.tokenCheck import tokenCheckProcess
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -14,8 +13,18 @@ SECRET_KEY = 'SPARTA'
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    token = request.cookies.get('myToken')
+    calendarId = request.cookies.get('calendarId')
+    print('나의캘린더id: ', calendarId)
 
+    tokenMsg = tokenCheckProcess(token)
+    if tokenMsg['result'] == 'success':
+        return render_template('index.html', userInfo=tokenMsg['userInfo'])
+        # return render_template('나의캘린더.html?calendarId='+calendarId, userInfo=tokenMsg['userInfo'])
+    elif tokenMsg['result'] == 'fail' and tokenMsg['msg'] == '로그인 시간이 만료되었습니다.':
+        return render_template('index.html')
+    else:
+        return render_template('index.html')
 
 @app.route('/api/user/signUp', methods=["POST"])
 def signUp():
@@ -25,11 +34,11 @@ def signUp():
     return jsonify(msg)
 
 @app.route('/signin')
-def signInPage():
+def signIn():
     return render_template('signin.html')
 
 @app.route('/api/user/signIn', methods=['POST'])
-def signIn():
+def signInJwt():
     id = request.form['id']
     pw = request.form['pw']
 
