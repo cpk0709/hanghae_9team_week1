@@ -71,6 +71,7 @@ input:focus{
 /*content*/
 
 .content{
+    height: 100vh;
     padding-top: 100px;
     display: flex;
     justify-content: space-between;
@@ -78,8 +79,11 @@ input:focus{
 }
 
 .side-nav{
+    position: fixed;
+    left: 0;
+    top: 100px;
     width: 20vw;
-    height: 100vh;
+    height: 100%;
     background-color: #888888;
 }
 
@@ -102,7 +106,7 @@ input:focus{
 
 #calendar{
     width: 70vw;
-    margin: auto;
+    margin: auto 0 0 25%;
 }
 
 /*데이터 입력 modal css*/
