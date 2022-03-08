@@ -11,7 +11,7 @@ def tokenCheckProcess(token):
     from pymongo import MongoClient
     url = os.getenv('MONGO_DB_URL')
     client = MongoClient(url)
-    db = client.calendar
+    db = client.ourschedule
 
     try:
         # jwt.encode()로 인코딩한 JWT의 디코딩

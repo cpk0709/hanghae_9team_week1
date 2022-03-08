@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, jsonify
 
 from python.calendar.createCalendar import createCalendarProcess
 from python.calendar.deleteCalendar import deleteCalendarProcess
+from python.calendar.getCalendarIdList import getCalendarIdListProcess
+from python.calendar.getMyCalendarId import getMyCalendarIdProcess
 from python.post.createPost import createPostProcess
 from python.post.deletePost import deletePostProcess
 from python.user.signUp import signUpProcess
@@ -28,9 +30,9 @@ SECRET_KEY = 'SPARTA'
 def home():
     token = request.cookies.get('myToken')
     calendarId = request.cookies.get('calendarId')
-    print('나의캘린더id: ', calendarId)
+    print('나의캘린더id: ', calendarId) #
 
-    tokenMsg = tokenCheckProcess(token)
+    tokenMsg = tokenCheckProcess(token) # 사용자info 프로세스 분리----------
     if tokenMsg['result'] == 'success':
         return render_template('index.html', userInfo=tokenMsg['userInfo'])
         # return render_template('나의캘린더.html?calendarId='+calendarId, userInfo=tokenMsg['userInfo'])
@@ -59,6 +61,13 @@ def signInJwt():
     pw = request.form['pw']
 
     msg = signInProcess(id, pw)
+    if msg['result']=='success':
+        # 로그인성공시에 캘린더id들 가져오기
+        calendarIdList = getCalendarIdListProcess(msg['_id'])
+
+        # 나의 개인 캘린더id 가져오기
+        calendarId = getMyCalendarIdProcess(calendarIdList, msg['nickname'])
+        msg['calendarId'] = calendarId
     return jsonify(msg)
 
 @app.route('/api/calendar/get', methods=['GET'])
