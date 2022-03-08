@@ -1,6 +1,7 @@
 *{
     box-sizing: border-box;
     margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 a{
@@ -49,7 +50,7 @@ input:focus{
 
 .logo > a > span{
     display: inline-block;
-    transform: translateX(-13px);
+    transform: translateX(-10px);
 }
 
 .user-menu{

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/signup.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <script src="../static/signup.js" defer></script>
+</head>
+<body>
+<div class="back-gr">
+    <div>
+        <div class="signup-wrap">
+            <h1>회원가입</h1>
+            <div class="input-wrap">
+                <div class="id-input-wrap">
+                    <input id="id" class="input" type="text" placeholder="아이디"/>
+                    <button id="id-conf-btn">중복확인</button>
+                </div>
+
+
+                <input id="pw" class="input" type="password" placeholder="비밀번호" onchange="fillPw()"/><i id="pw_check" class="xi-check hidden"></i>
+                <input id="pw-conf" class="input" type="password" placeholder="비밀번호 확인" onchange="passwordConf()"/><i id="pwConf_check" class="xi-check hidden"></i>
+                <span class="pw_notCorect hidden">비밀번호가 일치하지 않습니다.</span>
+                <span class="pw_corect hidden">비밀번호가 일치합니다.</span>
+                <input id="nickname" class="input" type="text" placeholder="닉네임"/>
+            </div>
+            <div class="btn-wrap">
+                <button onclick="signUp()">회원가입</button>
+                <button onclick="">돌아가기</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
