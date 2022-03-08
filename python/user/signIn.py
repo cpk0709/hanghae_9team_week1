@@ -5,7 +5,6 @@ import jwt
 import os
 import hashlib
 from python.calendar.getCalendarIdList import getCalendarIdListProcess
-SECRET_KEY = 'SPARTA'
 
 def signInProcess(id, pw):
     load_dotenv(verbose=True)
@@ -31,6 +30,7 @@ def signInProcess(id, pw):
          'exp': datetime.utcnow() + timedelta(seconds=5)  # 24시간(60*60*24)
         }
         # JWT 토큰 발행
+        SECRET_KEY = os.getenv('SECRET_KEY')
         # token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
