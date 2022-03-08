@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, jsonify
 
 from python.calendar.createCalendar import createCalendarProcess
 from python.calendar.deleteCalendar import deleteCalendarProcess
+from python.post.createPost import createPostProcess
+from python.post.deletePost import deletePostProcess
 from python.user.signUp import signUpProcess
 from datetime import datetime, timedelta
 from python.calendar.getCalendar import getCalendarProcess
@@ -81,11 +83,28 @@ def createCalendar():
 def deleteCalendar():
     calendarId = request.form['calendarId']
 
-
     result = deleteCalendarProcess(calendarId)
 
     return jsonify(result)
 
+@app.route('/api/calendar/post/new', methods=['POST'])
+def createPost():
+    calendarId = request.form['calendarId']
+    dateTime = request.form['dateTime']
+    content = request.form['content']
+    nickname = request.form['nickname']
+
+    result = createPostProcess(calendarId, dateTime, content, nickname)
+
+    return jsonify(result)
+
+@app.route('/api/calendar/post/delete', methods=['POST'])
+def deletePost():
+    postId = request.form['postId']
+
+    result = deletePostProcess(postId)
+
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
