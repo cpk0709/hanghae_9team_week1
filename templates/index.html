@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<scrit>
 
+</scrit>
+<body>
+    {% if userInfo is defined %}
+        <h1>_id: {{ userInfo._id }}</h1>
+        <h1> id: {{ userInfo.id }}</h1>
+    {% else %}
+        <h1>미로그인</h1>
+    {% endif %}
 </body>
 </html>
