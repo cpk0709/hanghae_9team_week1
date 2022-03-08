@@ -1,7 +1,20 @@
+
+from flask import Flask, render_template, request, jsonify
+
+from python.calendar.createCalendar import createCalendarProcess
+from python.calendar.deleteCalendar import deleteCalendarProcess
+from python.post.createPost import createPostProcess
+from python.post.deletePost import deletePostProcess
+from python.user.signUp import signUpProcess
+from datetime import datetime, timedelta
+from python.calendar.getCalendar import getCalendarProcess
+import jwt
 from flask import Flask, render_template, request, jsonify, redirect
 from python.user.signUp import signUpProcess
 from python.user.signIn import signInProcess
 from python.user.tokenCheck import tokenCheckProcess
+
+
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -28,9 +41,12 @@ def home():
 
 @app.route('/api/user/signUp', methods=["POST"])
 def signUp():
-    user = request.get_json()
+    id = request.form['id']
+    pw = request.form['pw']
+    nickname = request.form['nickname']
 
-    msg = signUpProcess(user['id'], user['pw'], user['nickName'])
+
+    msg = signUpProcess(id, pw, nickname)
     return jsonify(msg)
 
 @app.route('/signin')
@@ -44,6 +60,49 @@ def signInJwt():
 
     msg = signInProcess(id, pw)
     return jsonify(msg)
+
+@app.route('/api/calendar/get', methods=['GET'])
+def getCalendar():
+    calendarId = request.args.get("calendarId")
+    result = getCalendarProcess(calendarId)
+
+    return jsonify(result)
+
+@app.route('/api/calendar/new', methods=['POST'])
+def createCalendar():
+    name = request.form['name']
+    owner = request.form['owner']
+
+    result = createCalendarProcess(name, owner)
+
+    return jsonify(result)
+
+@app.route('/api/calendar/delete', methods=['POST'])
+def deleteCalendar():
+    calendarId = request.form['calendarId']
+
+    result = deleteCalendarProcess(calendarId)
+
+    return jsonify(result)
+
+@app.route('/api/calendar/post/new', methods=['POST'])
+def createPost():
+    calendarId = request.form['calendarId']
+    dateTime = request.form['dateTime']
+    content = request.form['content']
+    nickname = request.form['nickname']
+
+    result = createPostProcess(calendarId, dateTime, content, nickname)
+
+    return jsonify(result)
+
+@app.route('/api/calendar/post/delete', methods=['POST'])
+def deletePost():
+    postId = request.form['postId']
+
+    result = deletePostProcess(postId)
+
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
