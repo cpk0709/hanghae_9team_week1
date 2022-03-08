@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>아워스케줄</title>
+    <link rel="stylesheet" href="../static/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href='/resources/lib/main.css' rel='stylesheet'/>
+    <script src='/resources/lib/main.js'></script>
+    <script src="/resources/lib/locales/ko.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'ko',
+                selectable: true,
+                aspectRatio: 1.35,
+                navLinks: true,
+                editable: true,
+//                select: function (arg) {
+//                    var title = prompt('Event Title:');
+//                    if (title) {
+//                        calendar.addEvent({
+//                            title: title,
+//                            start: arg.start,
+//                            end: arg.end,
+//                            allDay: arg.allDay
+ //                       })
+//                    }
+//                    calendar.unselect()
+//                },
+                events: [
+                    {
+                        title: 'event1',
+                        start: '2022-03-01'
+                    },
+                    {
+                        title: 'event1-1',
+                        start: '2022-03-01'
+                    },
+                    {
+                        title: 'event1-2',
+                        start: '2022-03-01'
+                    },
+                    {
+                        title: 'event1-3',
+                        start: '2022-03-01'
+                    },
+                    {
+                        title: 'event1-4',
+                        start: '2022-03-01'
+                    },
+                    {
+                        title: 'event2',
+                        start: '2022-03-03',
+                        end: '2022-03-05'
+                    },
+                    {
+                        title: 'event3',
+                        start: '2022-03-09T12:30:00',
+                        allDay: false // will make the time show
+                    }
+                ],
+                dateClick: function (info) {
+
+                    const dayTag = document.getElementById("selec_day");
+
+                    dayTag.innerText = info.dateStr;
+
+                    const td = info.dayEl;
+                    const modal = document.querySelector(".modal");
+                    const overlay = modal.querySelector(".modal__overlay");
+                    const closeBtn = modal.querySelector("#close_btn");
+                    const openModal = () => {
+                        modal.classList.remove("hidden");
+                    }
+                    const closeModal = () => {
+                        modal.classList.add("hidden");
+                    }
+                    overlay.addEventListener("click", closeModal);
+                    closeBtn.addEventListener("click", closeModal);
+                    td.addEventListener("click", openModal());
+                }
+            });
+            calendar.render();
+        });
+
+        function enter_sche() {
+            const date = $('#selec_day').text();
+            const sche = $('#sche_input').val();
+            console.log(date);
+            console.log(sche);
+            $.ajax({
+                type: 'POST',
+                url: '/test',
+                data: {date_giv: date, sche_give: sche},
+                success: function (response) {
+                    alert(response);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="wrap">
+    <div class="nav">
+
+    </div>
+    <div class="content">
+        <div class="side-nav"></div>
+        <div id='calendar'></div>
+        <div class="modal hidden">
+            <div class="modal__overlay"></div>
+            <div class="modal__content">
+                <h1>스케줄 등록하기</h1>
+                <h2 id="selec_day"></h2>
+                <textarea type="text" id="sche_input" placeholder="내용을 입력해주세요."></textarea>
+                <div class="modal_btn_wrap">
+                    <button onclick="enter_sche()" id="enter_btn" class="modal_btn">등록</button>
+                    <button id="close_btn" class="modal_btn">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+
+</script>
+</body>
+</html>
