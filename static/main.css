@@ -16,26 +16,72 @@ input:focus{
     outline: none;
 }
 
+/*header*/
 .nav{
     width: 100vw;
     height: 100px;
     background-color: #284868;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-.content{
+.logo{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    color: #d6b98c;
+    font-size: 2rem;
+    margin: 0 2rem;
+}
+
+.user-menu{
+    width: 15%;
     display: flex;
     justify-content: space-around;
+    margin: 0 2rem;
+}
+
+.user-profile{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 100%;
+    background-color: pink;
+}
+
+.logout-btn{
+    background-color: transparent;
+    border:2px solid #fff;
+    border-radius: 15px;
+    color: #fff;
+    padding: 0 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 43px;
+}
+
+/*content*/
+
+.content{
+    padding-top: 100px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
 .side-nav{
     width: 20vw;
     height: 100vh;
-    background-color: #8fdf82;
+    background-color: #888888;
 }
 
 #calendar{
     width: 70vw;
+    margin: auto;
 }
 
 /*데이터 입력 modal css*/
