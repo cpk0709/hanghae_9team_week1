@@ -1,0 +1,194 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+button{
+    border: none;
+    cursor: pointer;
+}
+
+input{
+    border: none;
+}
+
+input:focus{
+    outline: none;
+}
+
+/*header*/
+.nav{
+    width: 100vw;
+    height: 100px;
+    background-color: #284868;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.logo{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    color: #d6b98c;
+    font-size: 2rem;
+    margin: 0 2rem;
+}
+
+.user-menu{
+    width: 15%;
+    display: flex;
+    justify-content: space-around;
+    margin: 0 2rem;
+}
+
+.user-profile{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 100%;
+    background-color: pink;
+}
+
+.logout-btn{
+    background-color: transparent;
+    border:3px solid #fff;
+    border-radius: 15px;
+    color: #fff;
+    padding: 0 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 43px;
+}
+
+/*content*/
+
+.content{
+    padding-top: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.side-nav{
+    width: 20vw;
+    height: 100vh;
+    background-color: #888888;
+}
+
+.side-nav > ul{
+    list-style: none;
+    padding: 1rem 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.side-nav > ul > li{
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.side-nav > ul > li > a{
+    color: #fff;
+}
+
+#calendar{
+    width: 70vw;
+    margin: auto;
+}
+
+/*데이터 입력 modal css*/
+.modal{
+    z-index: 1000;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    position : fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal__overlay{
+    background-color: rgba(0,0,0,0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.modal__content{
+    background-color: #fff;
+    padding: 50px 100px;
+    text-align: center;
+    position: relative;
+    width: 40%;
+    height: 50%;
+    top: 0;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.hidden{
+    display: none;
+}
+
+.modal__content > h1{
+    margin-bottom: 2rem;
+}
+
+#sche_input,#edit_input{
+    width: 90%;
+    height: 40%;
+    resize: none;
+    padding: 0.5rem 1rem;
+    background-color: #eee;
+    font-size: 1.7em;
+    border: none;
+    border-radius: 5px;
+}
+
+#sche_input:focus{
+    outline: none;
+}
+
+.modal_btn_wrap{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.modal_btn{
+    padding: 0.5rem 2rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 5px;
+}
+
+#enter_btn:hover, #edit_btn:hover{
+    background-color: #90e2ff;
+    transition: all 0.3s;
+}
+
+#delete_btn:hover{
+    background-color: pink;
+    transition: all 0.3s;
+}
+
+#close_btn:hover{
+    background-color: #bcbcbc;
+    transition: all 0.3s;
+}
