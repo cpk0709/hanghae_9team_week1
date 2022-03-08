@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, jsonify
 
-from python.calendar.createCalendar import newCalendar
+from python.calendar.createCalendar import createCalendarProcess
+from python.calendar.deleteCalendar import deleteCalendarProcess
 from python.user.signUp import signUpProcess
 from datetime import datetime, timedelta
-from python.calendar.getCalendar import getCalendar
+from python.calendar.getCalendar import getCalendarProcess
 import jwt
 
 
@@ -61,9 +62,9 @@ def sign_in():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 @app.route('/api/calendar/get', methods=['GET'])
-def getCalendarList():
+def getCalendar():
     calendarId = request.args.get("calendarId")
-    result = getCalendar(calendarId)
+    result = getCalendarProcess(calendarId)
 
     return jsonify(result)
 
@@ -72,7 +73,16 @@ def createCalendar():
     name = request.form['name']
     owner = request.form['owner']
 
-    result = newCalendar(name, owner)
+    result = createCalendarProcess(name, owner)
+
+    return jsonify(result)
+
+@app.route('/api/calendar/delete', methods=['POST'])
+def deleteCalendar():
+    calendarId = request.form['calendarId']
+
+
+    result = deleteCalendarProcess(calendarId)
 
     return jsonify(result)
 

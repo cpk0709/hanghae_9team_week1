@@ -1,28 +1,38 @@
+from bson import ObjectId
+
 from python.database.mongoDB import getConnection
 
-def getCalendar(calendarId):
+def getCalendarProcess(calendarId):
+    # get db connection
     client = getConnection()
     db = client.ourschedule
 
     try:
-        calendar = db.post.find({'calendarId': 111})
-
         result = []
+
+        #calander id 에 해당하는 post 리스트를 만든다.
+        calendar = db.post.find({'calendarId': ObjectId(calendarId)})
         for sub in calendar:
             print(sub)
             sub['_id'] = str(sub['_id'])
             result.append(sub)
 
+        # post가 없다면 none을 반환한다.
+        if len(result) == 0:
+            result = "none"
+
+        result = {"schedule": result}
+
     except Exception as e:
         print(e)
-        return {'msg': "db error"}
+        result = {'msg': "db error"}
 
-    if len(result) == 0:
-        result = "none"
 
-    return {"schedule": result}
+    return result
 
-def dummydata():
+
+# mocking 데이터 생성 함수
+def mockdata():
     client = getConnection()
     db = client.ourschedule
 
@@ -31,14 +41,14 @@ def dummydata():
         "time": 'Time',
         "content": 'Content',
         "nickname": "woong",
-        "calendarid": '11'
+        "calendarid": ObjectId('11')
     }
     doc2 = {
         "date": '1',
         "time": '32',
         "content": 'Content',
         "nickname": "woong",
-        "calendarid": '11',
+        "calendarid": ObjectId('11'),
     }
     db.calendar.insert_one(doc1)
     db.calendar.insert_one(doc2)

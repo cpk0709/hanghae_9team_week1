@@ -1,8 +1,9 @@
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
+from flask import make_response
 
-
+#!!!!!!!!!!!!매우 큰 에러 존재 exception 못잡음!!!!!!!!!!!!!!!!!!!
 #단순 Connection만 제공하는 함수
 def getConnection():
     #환경변수 설정

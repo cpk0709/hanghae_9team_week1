@@ -1,38 +1,38 @@
 from python.database.mongoDB import getConnection
 
-def newCalendar(name, owner):
-    result = ""
 
+def createCalendarProcess(name, owner):
+    #get db connection
     client = getConnection()
     db = client.ourschedule
+
+    result = None
     try:
-
+        #캘린더의 이름이 중복이면 만들지 않는다.
         if db.calendar.find_one({'name': name}) is not None:
-            return {'msg': 'exist name'}
+            result = {'msg': 'exist name'}
+        else:
+            calendar = {
+                'name': name,
+                'owner': owner
+            }
+            db.calendar.insert_one(calendar)
 
+            calendarId = db.calendar.find_one(calendar)['_id']
+            userId = db.user.find_one({'nickname': owner})['_id']
 
-        calendar = {
-            'name': name,
-            'owner': owner
-        }
-        db.calendar.insert_one(calendar)
+            #user와 calendar의 다대다 관계를 위한 team table을 생성한다.
+            team = {
+                'userid': userId,
+                'calendarid': calendarId
+            }
+            db.team.insert_one(team)
 
-        calendarId = db.calendar.find_one(calendar)['_id']
-        userId = db.user.find_one({'nickname': owner})['_id']
-
-        print(calendarId, userId)
-
-        team = {
-            'userid': userId,
-            'calendarid': calendarId
-        }
-        db.team.insert_one(team)
-
-        return {"calendarId": str(calendarId)}
+            result = {"calendarId": str(calendarId)}
 
     except Exception as e:
         print(e)
-        return {"msg": "db error"}
+        result = {"msg": "db error"}
 
     return result
 
