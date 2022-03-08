@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+</head>
+<script>
+    function signIn() {
+        let id = $("#id").val()
+        let pw = $("#pw").val()
+
+        if (id == "") {
+            alert("아이디를 입력해주세요.")
+            $("#id").focus()
+            return;
+        }
+        if (pw == "") {
+            alert("비밀번호를 입력해주세요.")
+            $("#pw").focus()
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/api/user/signIn",
+            data: {
+                id: id,
+                pw: pw
+            },
+            success: function (response) {
+                console.log(response)
+                if (response['result'] == 'success') {
+                    //토큰: 검증된 사람 ID, 유효시간
+                    //토큰을 받아서 브라우저의 쿠키에 저장, 이후 요청을 보낼때 계속 딸려감
+                    console.log('로그인성공')
+                    $.cookie('myToken', response['token'], {path: '/'});
+                    $.cookie('calendarId', response['calendarId'], {path: '/'});
+                    alert(response['msg'])
+                    window.location.replace("/")
+                } else {
+                    console.log('로그인실패')
+                    alert(response['msg'])
+                }
+            }
+        });
+    }
+</script>
+<body>
+
+<input id="id" class="input" type="text" placeholder="아이디">
+<input id="pw" class="input" type="password" placeholder="비밀번호">
+<button onclick="signIn()">로그인</button>
+
+</body>
+</html>
