@@ -83,7 +83,7 @@ input:focus{
     margin-bottom: 2rem;
 }
 
-#sche_input{
+#sche_input,#edit_input{
     width: 90%;
     height: 40%;
     resize: none;
@@ -99,7 +99,7 @@ input:focus{
 }
 
 .modal_btn_wrap{
-    width: 70%;
+    width: 100%;
     display: flex;
     justify-content: space-around;
 }
@@ -111,12 +111,17 @@ input:focus{
     border-radius: 5px;
 }
 
-#enter_btn:hover{
+#enter_btn:hover, #edit_btn:hover{
     background-color: #90e2ff;
     transition: all 0.3s;
 }
 
-#close_btn:hover{
+#delete_btn:hover{
     background-color: pink;
+    transition: all 0.3s;
+}
+
+#close_btn:hover{
+    background-color: #bcbcbc;
     transition: all 0.3s;
 }
