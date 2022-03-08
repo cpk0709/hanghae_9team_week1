@@ -1,17 +1,11 @@
 from datetime import datetime, timedelta
-from dotenv import load_dotenv
-from bson import ObjectId
+from python.database.mongoDB import getConnection
 import jwt
 import os
 import hashlib
-from python.calendar.getCalendarIdList import getCalendarIdListProcess
 
 def signInProcess(id, pw):
-    load_dotenv(verbose=True)
-
-    from pymongo import MongoClient
-    url = os.getenv('MONGO_DB_URL')
-    client = MongoClient(url)
+    client = getConnection()
     db = client.ourschedule
 
     pw = hashlib.sha256(pw.encode('utf-8')).hexdigest()
@@ -26,7 +20,7 @@ def signInProcess(id, pw):
         payload = {
          'id': id,
          # 'calendarId': calendarId,
-         'exp': datetime.utcnow() + timedelta(seconds=5)  # 24시간(60*60*24)
+         'exp': datetime.utcnow() + timedelta(seconds=60*60*24)  # 24시간(60*60*24)
         }
         # JWT 토큰 발행
         SECRET_KEY = os.getenv('SECRET_KEY')
@@ -38,3 +32,5 @@ def signInProcess(id, pw):
     # 찾지 못하면(None이면)
     else:
         return {'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'}
+
+    client.close()
