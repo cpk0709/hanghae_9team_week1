@@ -15,16 +15,12 @@ from flask import Flask, render_template, request, jsonify, redirect
 from python.user.signUp import signUpProcess
 from python.user.signIn import signInProcess
 from python.user.tokenCheck import tokenCheckProcess
-
+import os
 
 
 app = Flask(__name__, static_url_path='/static')
 
-from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@cluster0.zee7s.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.dbsparta
-
-SECRET_KEY = 'SPARTA'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def home():
