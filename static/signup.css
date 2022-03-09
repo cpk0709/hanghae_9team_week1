@@ -1,0 +1,104 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.back-gr {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../resources/asset/backgr.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.back-gr > div {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-wrap {
+    width: 40rem;
+    height: 45rem;
+    background-color: rgba(40, 72, 104, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5rem;
+    border-radius: 15px;
+}
+
+h1 {
+    color: #fff;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+input {
+    width: 80%;
+    height: 3rem;
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+input:focus {
+    outline: none;
+}
+
+.btn-wrap {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+button {
+    cursor: pointer;
+    width: 7rem;
+    height: 3rem;
+    border: none;
+    background-color: transparent;
+    color: #d6b98c;
+    border: 3px solid #d6b98c;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.pw_notCorect{
+    display: block;
+    color: #ff5858;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.pw_corect{
+    display: block;
+    color: #52ff52;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.hidden{
+    display: none;
+}
+
+i.hidden{
+    display: none;
+}
+
+.xi-check{
+    color: #52ff52;
+    font-size: 2rem;
+    margin-left: 0.5rem;
+}

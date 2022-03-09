@@ -1,7 +1,10 @@
+// import dayGridPlugin from '../resources/lib/main/daygrid';
+
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
+        // plugins:['dayGridMonth','dayGridPlugin'],
         initialView: 'dayGridMonth',
         locale: 'ko',
         selectable: true,
@@ -28,29 +31,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: 'event1',
                 start: '2022-03-01'
             },
-            // {
-            //     title: 'event1-1',
-            //     start: '2022-03-01'
-            // },
-            // {
-            //     title: 'event1-2',
-            //     start: '2022-03-01'
-            // },
-            // {
-            //     title: 'event1-3',
-            //     start: '2022-03-01'
-            // },
-            // {
-            //     title: 'event1-4',
-            //     start: '2022-03-01'
-            // },
             {
                 title: 'event2',
                 start: '2022-03-03',
                 end: '2022-03-05'
             },
             {
-                title: 'event3',
+                title: '대통령선거',
                 start: '2022-03-09T12:30:00',
                 allDay: false // will make the time show
             }
@@ -89,11 +76,11 @@ document.addEventListener('DOMContentLoaded', function () {
             //dateArray의 year부분
             const year = dateArray[3];
             //dateArray의 month부분. month는 0부터시작이라 +1해줌. 두자리로 만들기위해 '0'붙임
-            const month = '0' + (date.getMonth(dateArray[1])+1);
+            const month = '0' + (date.getMonth(dateArray[1]) + 1);
             //dateArray의 day부분
             const day = dateArray[2];
 
-            const editDate = year.concat('-',month,'-',day);
+            const editDate = year.concat('-', month, '-', day);
             //스케줄 시작일을 수정/삭제 모달에 넣어주고있다.
             document.getElementById('edit_day').innerText = editDate;
             //스케줄 내용을 수정/삭제 모달에 넣어주고있다.
@@ -116,26 +103,38 @@ document.addEventListener('DOMContentLoaded', function () {
             openModal();
 
 
-            // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-
-            // change the border color just for fun
-            // info.el.style.borderColor = 'red';
         }
     });
 
     calendar.render();
 });
 
-//새로운 스케줄 입력하는 메서드
+//새로운 포스트 입력
 function enter_sche() {
+    const nickName = 'nickname';
+    const calendarid = 'calId';
     const date = $('#selec_day').text();
     const sche = $('#sche_input').val();
-    console.log(date);
-    console.log(sche);
     $.ajax({
         type: 'POST',
-        url: '/test',
-        data: {date_giv: date, sche_give: sche},
+        url: '/api/calendar/post/new',
+        data: {calendarId:calendarid,nickname:nickName,dateTime: date, content: sche},
+        success: function (response) {
+            alert(response);
+        }
+    });
+}
+
+//포스트 수정
+function edit_sche() {
+    const calendarid = 'calId';
+    const postid = 'postId';
+    const date = $('#edit_day').text();
+    const sche = $('#edit_input').val();
+    $.ajax({
+        type: 'POST',
+        url: '/api/calendar/post/edit',
+        data: {calendarId:calendarid,postId:postid,dateTime: date, content: sche},
         success: function (response) {
             alert(response);
         }
