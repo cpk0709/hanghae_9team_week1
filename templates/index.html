@@ -11,8 +11,15 @@
     {% if userInfo is defined %}
         <h1>_id: {{ userInfo._id }}</h1>
         <h1> id: {{ userInfo.id }}</h1>
+        <h1> id: {{ calendarIdList.calendarIdList }}</h1>
     {% else %}
         <h1>미로그인</h1>
+    {% endif %}
+
+    {% if userInfo is defined %}
+        {% for i in calendarIdList.calendarIdList %}
+            <input type="text" value="{{ i['calendarid']['$oid'] }}" />
+        {% endfor %}
     {% endif %}
 </body>
 </html>
