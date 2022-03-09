@@ -5,6 +5,7 @@ from python.calendar.getMyCalendarId import getMyCalendarIdProcess2
 from python.calendar.inviteCalendar import  createInviteLinkProcess
 from python.post.createPost import createPostProcess
 from python.post.deletePost import deletePostProcess
+from python.post.editPost import editPostProcess
 from python.user.signUp import signUpProcess
 from datetime import datetime, timedelta
 from python.calendar.getCalendar import getCalendarProcess
@@ -148,6 +149,15 @@ def createPost():
 
     result = createPostProcess(calendarId, dateTime, content, nickname)
 
+    return jsonify(result)
+
+@app.route('/api/calendar/post/edit', methods=['POST'])
+def editPost():
+    calendarId = request.form['calendarId']
+    dateTime = request.form['dateTime']
+    content = request.form['content']
+    nickname = request.form['nickname']
+    result = editPostProcess(calendarId, dateTime, content, nickname)
     return jsonify(result)
 
 @app.route('/api/calendar/post/delete', methods=['POST'])
