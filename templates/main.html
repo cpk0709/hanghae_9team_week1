@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>아워스케줄</title>
+
+        <!--bootStrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -14,10 +16,11 @@
     <script src='/static/resources/lib/main.js'></script>
     <script src="/static/resources/lib/locales/ko.js"></script>
     <script src="../static/main.js" defer></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-    <!--bootStrap-->
+
 
 </head>
 <body>
@@ -30,13 +33,14 @@
             </a>
         </div>
         <div class="user-menu">
-            <div class="user-profile"></div>
-            <button class="logout-btn">로그아웃</button>
+            <div class="user-profile" id="user-profile" ></div>
+            <button class="logout-btn" onclick=location.href='/api/user/logout' >로그아웃</button>
         </div>
     </div>
     <div class="content">
         <div class="side-nav">
             <ul id="calendar-nav">
+                <button type="button" class="btn btn-outline-dark" onclick="createCalendar()">캘린더 추가</button>
             </ul>
         </div>
         <div id='calendar'></div>
@@ -70,5 +74,13 @@
     </div>
 
 </div>
+{% if userInfo is defined %}
+    <h3 style="text-align: center">_id: {{ userInfo._id }}</h3>
+    <h3 style="text-align: center"> id: {{ userInfo.id }}</h3>
+    <h3 style="text-align: center"> nickname: {{ userInfo.nickname }}</h3>
+    <h3 style="text-align: center"> myCalendarId: {{ myCalendarId }}</h3>
+{% else %}
+    <h6 style="text-align: center">로그인후 사용가능합니다.</h6>
+{% endif %}
 </body>
 </html>

@@ -21,7 +21,7 @@ def signInProcess(id, pw):
         payload = {
          'userId': id,
          # 'calendarId': calendarId,
-         'exp': datetime.utcnow() + timedelta(seconds=60*60*24)  # 24시간(60*60*24)
+         'exp': datetime.utcnow() + timedelta(60*60*24)  # 24시간(60*60*24)
         }
         # JWT 토큰 발행
         SECRET_KEY = os.getenv('SECRET_KEY')
