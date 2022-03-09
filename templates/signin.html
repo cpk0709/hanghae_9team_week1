@@ -32,13 +32,13 @@
                 pw: pw
             },
             success: function (response) {
-                console.log(response)
                 if (response['result'] == 'success') {
                     //토큰: 검증된 사람 ID, 유효시간
                     //토큰을 받아서 브라우저의 쿠키에 저장, 이후 요청을 보낼때 계속 딸려감
-                    console.log('로그인성공')
-                    $.cookie('myToken', response['token'], {path: '/'});
-                    $.cookie('calendarId', response['calendarId'], {path: '/'});
+                    // console.log('로그인성공')
+                    // -> 쿠키를 백엔드에서 저장으로 변경
+                    // $.cookie('myToken', response['token'], {path: '/'});
+                    // $.cookie('calendarId', response['calendarId'], {path: '/'});
                     alert(response['msg'])
                     window.location.replace("/")
                 } else {
