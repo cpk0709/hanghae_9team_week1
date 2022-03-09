@@ -14,7 +14,7 @@ def tokenCheckProcess(token):
 
         # userInfo에 user정보를 전달 -> id만 전달
         # return {'result': 'success', 'userInfo':userInfo}
-        return {'result': 'success', 'id':payload['id']}
+        return {'result': 'success', 'id':payload['userId']}
 
     except jwt.ExpiredSignatureError:
         return {'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'}
