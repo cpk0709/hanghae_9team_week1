@@ -98,7 +98,7 @@ def signInJwt():
 
 @app.route('/api/calendar/list', methods=['GET'])
 def getCalendarList():
-    id = request.form['id']
+    id = request.args.get('id')
     result = getCalendarListProcess(id)
 
     return jsonify(result)

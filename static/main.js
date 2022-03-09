@@ -173,3 +173,55 @@ function delete_sche() {
         }
     });
 }
+
+
+// 네비게이션바 캘린더 리스트 받아온 후 보여주기
+$(document).ready(function () {
+    getCalendarList()
+})
+function getCalendarList(){
+    let userId = getCookieValue('id');
+    $.ajax({
+        type: 'GET',
+        url: '/api/calendar/list',
+        data: {'id':userId},
+        success: function (response) {
+            //personal calendar append
+            let temp_html = `
+                <li class="personal-sche">
+                    <a href="#" id="${response['personal']['_id']}">${response['personal']['name']}</a>
+                </li>
+            `
+            $('#calendar-nav').append(temp_html)
+
+            //team calendar append
+            for (const calendar of response['team']['list']) {
+                let temp_html = `
+                    <li class="personal-sche">
+                        <a href="#" id="${calendar['_id']}">${calendar['name']}</a>
+                    </li>
+                `
+                $('#calendar-nav').append(temp_html)
+            }
+        }
+    });
+}
+//get cookie function
+const getCookieValue = (key) => {
+  let cookieKey = key + "=";
+  let result = "";
+  const cookieArr = document.cookie.split(";");
+
+  for(let i = 0; i < cookieArr.length; i++) {
+    if(cookieArr[i][0] === " ") {
+      cookieArr[i] = cookieArr[i].substring(1);
+    }
+
+    if(cookieArr[i].indexOf(cookieKey) === 0) {
+      result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+      return result;
+    }
+  }
+  return result;
+}
+
