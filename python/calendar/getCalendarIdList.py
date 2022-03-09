@@ -6,8 +6,9 @@ def getCalendarIdListProcess(_id):
     db = client.ourschedule
 
     try:
-        # calendarIds = list(db.team.find({'userid': _id}, {'_id': 0, 'userid': 0}))         # String타입
+        # calendarIds = list(db.team.find({'userid': _id}, {'_id': 0, 'userid': 0}))            # String타입
         calendarIdList = list(db.team.find({'userid': ObjectId(_id)}, {'_id': 0, 'userid': 0})) # ObjectId타입
+        # calendarIdList = dict(db.team.find({'userid': ObjectId(_id)}, {'_id': 0, 'userid': 0}))
 
         return calendarIdList
 

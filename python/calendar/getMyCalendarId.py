@@ -8,7 +8,6 @@ def getMyCalendarIdProcess(calendarIdList, nickname):
     try:
         calendarId = ''
         for cal in calendarIdList:
-            print(cal)
             myCalendarId = db.calendar.find_one({'_id': ObjectId(cal['calendarid']), 'name': nickname + ' 캘린더'})
             if myCalendarId is not None:
                 calendarId = str(myCalendarId['_id'])
@@ -18,3 +17,5 @@ def getMyCalendarIdProcess(calendarIdList, nickname):
     except Exception as e:
         print(e)
         return {"msg": "error"}
+
+    client.close()

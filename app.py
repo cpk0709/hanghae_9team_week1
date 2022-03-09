@@ -1,6 +1,3 @@
-
-from flask import Flask, render_template, request, jsonify
-
 from python.calendar.createCalendar import createCalendarProcess
 from python.calendar.deleteCalendar import deleteCalendarProcess
 from python.calendar.getCalendarIdList import getCalendarIdListProcess
@@ -11,10 +8,12 @@ from python.user.signUp import signUpProcess
 from datetime import datetime, timedelta
 from python.calendar.getCalendar import getCalendarProcess
 import jwt
-from flask import Flask, render_template, request, jsonify, redirect
+from flask import Flask, render_template, request, jsonify, redirect, make_response, json
 from python.user.signUp import signUpProcess
 from python.user.signIn import signInProcess
 from python.user.tokenCheck import tokenCheckProcess
+from python.user.getUserInfo import getUserInfoProcess
+from bson import json_util
 import os
 
 
@@ -25,13 +24,18 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 @app.route('/')
 def home():
     token = request.cookies.get('myToken')
-    calendarId = request.cookies.get('calendarId')
-    print('나의캘린더id: ', calendarId) #
 
-    tokenMsg = tokenCheckProcess(token) # 사용자info 프로세스 분리----------
+    # 토큰 유효성 체크
+    tokenMsg = tokenCheckProcess(token)
     if tokenMsg['result'] == 'success':
-        return render_template('index.html', userInfo=tokenMsg['userInfo'])
-        # return render_template('나의캘린더.html?calendarId='+calendarId, userInfo=tokenMsg['userInfo'])
+        calendarId = request.cookies.get('calendarId')
+        calendarIdList = request.cookies.get('calendarIdList')
+        dictCalendarIdList = json.loads(calendarIdList) # str->dict
+        # 사용자 정보 가져오기
+        userInfo = getUserInfoProcess(tokenMsg['id'])
+        # return render_template('index.html', userInfo=userInfo, calendarIdList=dictCalendarIdList)
+        # return render_template('main.html?calendarId='+calendarId, userInfo=userInfo, calendarIdList=dictCalendarIdList)
+        return render_template('main.html', userInfo=userInfo, calendarIdList=dictCalendarIdList)
     elif tokenMsg['result'] == 'fail' and tokenMsg['msg'] == '로그인 시간이 만료되었습니다.':
         return render_template('index.html')
     else:
@@ -58,15 +62,29 @@ def signInJwt():
     pw = request.form['pw']
 
     msg = signInProcess(id, pw)
+    resp = make_response(jsonify(msg))
     if msg['result']=='success':
-        # 로그인성공시에 캘린더id들 가져오기
+        # 로그인성공시 캘린더id들 가져오기
         calendarIdList = getCalendarIdListProcess(msg['_id'])
 
         # 나의 개인 캘린더id 가져오기
         calendarId = getMyCalendarIdProcess(calendarIdList, msg['nickname'])
+        # 응답 딕셔너리에 추가
         msg['calendarId'] = calendarId
 
-    return jsonify(msg)
+        # 백엔드에서 쿠키 저장
+        resp.set_cookie('myToken', msg['token'])
+        resp.set_cookie('calendarId', calendarId)
+        # 캘린더ID List를 쿠키로 보내기위해 str로 변환하는 과정(쿠키는 str만 가능)
+        calendarIdList = {"calendarIdList": calendarIdList}
+        # ObjectId('') is not JSON serializable의 해결방법
+        # {'calendarid': ObjectId('62273cd907b346c1eedbe9c5')} -> {'calendarid': {'$oid': '62273cd907b346c1eedbe9c5'}}
+        calendarIdList = json.loads(json_util.dumps(calendarIdList))
+        resp.set_cookie('calendarIdList', json.dumps(calendarIdList))
+        return resp
+    else:
+        return resp
+
 
 @app.route('/api/calendar/get', methods=['GET'])
 def getCalendar():
