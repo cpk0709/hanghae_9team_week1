@@ -40,11 +40,12 @@ def home():
 @app.route('/api/user/signUp', methods=["POST"])
 def signUp():
     id = request.form['id']
-    pw = request.form['pw']
+    pwOne = request.form['pwOne']
+    pwTwo = request.form['pwTwo']
     nickname = request.form['nickname']
 
 
-    msg = signUpProcess(id, pw, nickname)
+    msg = signUpProcess(id, pwOne, pwTwo, nickname)
     return jsonify(msg)
 
 @app.route('/signin')
@@ -64,6 +65,7 @@ def signInJwt():
         # 나의 개인 캘린더id 가져오기
         calendarId = getMyCalendarIdProcess(calendarIdList, msg['nickname'])
         msg['calendarId'] = calendarId
+
     return jsonify(msg)
 
 @app.route('/api/calendar/get', methods=['GET'])
