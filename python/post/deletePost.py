@@ -16,7 +16,6 @@ def deletePostProcess(postId):
             db.post.delete_one({'_id': ObjectId(postId)})
             result = {'msg': 'success'}
     except Exception as e:
-
         print(e)
         result = {'msg': 'db error'}
 
