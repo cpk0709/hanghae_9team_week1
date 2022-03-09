@@ -19,7 +19,7 @@ def signInProcess(id, pw):
         nickname = str(result['nickname'])
 
         payload = {
-         'id': id,
+         'userId': id,
          # 'calendarId': calendarId,
          'exp': datetime.utcnow() + timedelta(seconds=60*60*24)  # 24시간(60*60*24)
         }
