@@ -54,15 +54,39 @@ def signUp():
 
 @app.route('/signin')
 def signIn():
-    return render_template('signin.html')
+    # 토큰확인 후 이미 로그인되어있으면 main.html로 이동
+    token = request.cookies.get('myToken')
+    if token is not None:
+        tokenMsg = tokenCheckProcess(token)
+        if tokenMsg['result'] == 'success':
+            userInfo = getUserInfoProcess(tokenMsg['id'])
+            # return render_template('main.html', userInfo=userInfo)
+            return redirect(url_for("main"))
+        else:
+            return tokenMsg
+    else:
+        return render_template('signin.html')
 
 @app.route('/render')
 def render():
     return render_template('signup.html')
 
-@app.route('/main')
+@app.route('/main', methods=['GET'])
 def main():
-    return render_template('main.html')
+    token = request.cookies.get('myToken')
+    tokenMsg = tokenCheckProcess(token)
+    if tokenMsg['result'] == 'success':
+        # http://192.168.0.22:5000/main?calendarId=62273cd907b346c1eedbe9c5
+        calendarId = request.args.get("calendarId")
+        userInfo = getUserInfoProcess(tokenMsg['id'])
+        if calendarId is not None:
+            resp = make_response(render_template('main.html', userInfo=userInfo, myCalendarId=calendarId))
+            resp.set_cookie('myCalendarId', calendarId)
+        else:
+            resp = make_response(render_template('main.html', userInfo=userInfo))
+        return resp
+    else:
+        return redirect(url_for("signIn"))
 
 @app.route('/api/user/signIn', methods=['POST'])
 def signInJwt():
@@ -86,9 +110,9 @@ def signInJwt():
 
 @app.route('/api/user/logout')
 def logout():
-    resp = make_response(render_template('index.html'))
+    resp = make_response(redirect(url_for("main")))
     # resp = make_response(url_for('home'))
-    resp.delete_cookie('mytoken')
+    resp.delete_cookie('myToken')
     resp.delete_cookie('id')
     resp.delete_cookie('calendarId')
     return resp
@@ -173,7 +197,7 @@ def editPost():
 
 @app.route('/api/calendar/post/delete', methods=['POST'])
 def deletePost():
-    token = request.cookies.get('mytoken')
+    token = request.cookies.get('myToken')
     tokenMsg = tokenCheckProcess(token)
     if tokenMsg['result'] == 'success':
         postId = request.form['postId']
@@ -192,7 +216,7 @@ def tokenMiddlewareTest():
 # 라우터에서 토큰확인하는 쌤플코드
 @app.route('/sample')
 def noMiddleSample():
-    token = request.cookies.get('mytoken')
+    token = request.cookies.get('myToken')
     tokenMsg = tokenCheckProcess(token)
     if tokenMsg['result'] == 'success':
         # 라우터 기존코드 실행
