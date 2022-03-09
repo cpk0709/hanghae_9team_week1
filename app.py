@@ -19,7 +19,6 @@ from python.user.tokenMiddleware import token_required
 from bson import json_util
 import os
 
-
 app = Flask(__name__, static_url_path='/static')
 
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -89,23 +88,6 @@ def main():
     else:
         return redirect(url_for("signIn"))
 
-# @app.route('/main?calendarId="fdgfdsgfsd"')
-# def main():
-#     token = request.cookies.get('myToken')
-#     # 토큰 유효성 체크
-#     tokenMsg = tokenCheckProcess(token)
-#     if tokenMsg['result'] == 'success':
-#         calendarId = request.cookies.get('calendarId')
-#         calendarIdList = request.cookies.get('calendarIdList')
-#         dictCalendarIdList = json.loads(calendarIdList)  # str->dict
-#         # 사용자 정보 가져오기
-#         userInfo = getUserInfoProcess(tokenMsg['id'])
-#         return render_template('main.html', userInfo=userInfo, calendarIdList=dictCalendarIdList)
-#     elif tokenMsg['result'] == 'fail' and tokenMsg['msg'] == '로그인 시간이 만료되었습니다.':
-#         return render_template('index.html')
-#     else:
-#         return render_template('index.html')
-
 
 @app.route('/api/user/signIn', methods=['POST'])
 def signInJwt():
@@ -134,13 +116,12 @@ def logout():
     resp.delete_cookie('myToken')
     resp.delete_cookie('id')
     resp.delete_cookie('calendarId')
+    resp.delete_cookie('myCalendarId')
     return resp
 
 @app.route('/api/calendar/list', methods=['GET'])
 def getCalendarList():
-  
     id = request.args.get('id')
-
     result = getCalendarListProcess(id)
 
     return jsonify(result)
@@ -214,10 +195,17 @@ def editPost():
     result = editPostProcess(calendarId, dateTime, content, nickname)
     return jsonify(result)
 
+from python.database.mongoDB import getConnection
 @app.route('/api/calendar/post/delete', methods=['POST'])
 def deletePost():
     token = request.cookies.get('myToken')
     tokenMsg = tokenCheckProcess(token)
+
+    client = getConnection()
+    db = client.ourschedule
+    post = list(db.post.find({}, {'_id': False}))
+    print(post)
+
     if tokenMsg['result'] == 'success':
         postId = request.form['postId']
 

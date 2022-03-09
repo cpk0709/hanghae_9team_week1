@@ -33,7 +33,7 @@
             </a>
         </div>
         <div class="user-menu">
-            <div class="user-profile" id="user-profile" ></div>
+            <div class="user-profile" id="user-profile" >{{ userInfo.nickname }}</div>
             <button class="logout-btn" onclick=location.href='/api/user/logout' >로그아웃</button>
         </div>
     </div>
@@ -75,12 +75,12 @@
 
 </div>
 {% if userInfo is defined %}
-    <h3 style="text-align: center">_id: {{ userInfo._id }}</h3>
-    <h3 style="text-align: center"> id: {{ userInfo.id }}</h3>
-    <h3 style="text-align: center"> nickname: {{ userInfo.nickname }}</h3>
-    <h3 style="text-align: center"> myCalendarId: {{ myCalendarId }}</h3>
+<!--    <h3 style="text-align: center">_id: {{ userInfo._id }}</h3>-->
+<!--    <h3 style="text-align: center"> id: {{ userInfo.id }}</h3>-->
+<!--    <h3 style="text-align: center"> nickname: {{ userInfo.nickname }}</h3>-->
+<!--    <h3 style="text-align: center"> myCalendarId: {{ myCalendarId }}</h3>-->
 {% else %}
-    <h6 style="text-align: center">로그인후 사용가능합니다.</h6>
+<!--    <h6 style="text-align: center">로그인후 사용가능합니다.</h6>-->
 {% endif %}
 </body>
 </html>

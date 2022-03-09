@@ -23,9 +23,19 @@ def getCalendarListProcess(id): #캘린더 개인,팀 - 캘린더ID/이름
     result = {}
 
     try:
+        calendar = list(db.calendar.find({}))
+        user = list(db.user.find({}))
+        team = list(db.team.find({}))
+        print(calendar)
+        print(user)
+        print(team)
+
         userInfo = db.user.find_one({'id': id})
-        _id = userInfo['_id']
-        nickname = userInfo['nickname']
+        if userInfo is not None:
+            _id = userInfo['_id']
+            nickname = userInfo['nickname']
+        else:
+            return {"msg": "ID is not existed"}
 
         # calendarList = list(db.team.find({'userid': ObjectId(_id)}, {'_id': 0, 'userid': 0})) # ObjectId타입
         MyCalendar = db.calendar.find_one({'owner': nickname, 'name':nickname+' 캘린더'})
