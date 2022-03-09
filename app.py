@@ -1,7 +1,8 @@
 from python.calendar.createCalendar import createCalendarProcess
 from python.calendar.deleteCalendar import deleteCalendarProcess
-from python.calendar.getCalendarIdList import getCalendarIdListProcess
+from python.calendar.getCalendarIdList import getCalendarIdListProcess, getCalendarListProcess
 from python.calendar.getMyCalendarId import getMyCalendarIdProcess
+from python.calendar.inviteCalendar import  createInviteLinkProcess
 from python.post.createPost import createPostProcess
 from python.post.deletePost import deletePostProcess
 from python.user.signUp import signUpProcess
@@ -78,6 +79,7 @@ def signInJwt():
         msg['calendarId'] = calendarId
 
         # 백엔드에서 쿠키 저장
+        resp.set_cookie('id', id)
         resp.set_cookie('myToken', msg['token'])
         resp.set_cookie('calendarId', calendarId)
         # 캘린더ID List를 쿠키로 보내기위해 str로 변환하는 과정(쿠키는 str만 가능)
@@ -89,6 +91,13 @@ def signInJwt():
         return resp
     else:
         return resp
+
+@app.route('/api/calendar/list', methods=['GET'])
+def getCalendarList():
+    id = request.form['id']
+    result = getCalendarListProcess(id)
+
+    return jsonify(result)
 
 
 @app.route('/api/calendar/get', methods=['GET'])
@@ -114,6 +123,30 @@ def deleteCalendar():
     result = deleteCalendarProcess(calendarId)
 
     return jsonify(result)
+
+@app.route('/api/calendar/createLink', methods=['POST'])
+def createLink():
+    calendarId = request.form['calendarId']
+
+    result = createInviteLinkProcess(calendarId)
+
+    return jsonify(result)
+
+@app.route('/api/calendar/invite', methods=['POST'])
+def inviteCalendar():
+    # calendarId = request.args.get('calendarId')
+
+    token = request.cookies.get('myToken')
+    print(token)
+    payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    print(payload)
+    userId = payload['id']
+    print(userId)
+
+    # result = createInviteLinkProcess(calendarId, userId)
+
+    # return jsonify(result)
+    return jsonify({'1':'1'})
 
 @app.route('/api/calendar/post/new', methods=['POST'])
 def createPost():
