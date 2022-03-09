@@ -8,7 +8,7 @@ const fillPw = () => {
 
 const passwordConf = () => {
     const pw = document.getElementById('pw').value;
-    const pw_conf = document.getElementById('pw-conf').value;
+    const pw_conf = document.getElementById('pw_conf').value;
 
     const pwCheck = document.getElementById('pw_check');
     const pwConfCheck = document.getElementById('pwConf_check');
@@ -34,15 +34,17 @@ const passwordConf = () => {
 }
 
 const signUp = () => {
-    const id = document.getElementById('id');
+    const id = document.getElementById('id').value;
+    console.log('!!!');
     //아이디를 입력했다면
     if (id.value != '') {
+        console.log('@@@');
         //pw요소 가져옴
-        const pw = document.getElementById('pw');
+        const pw = document.getElementById('pw').value;
         //pw-conf요소 가져옴
-        const pw_conf = document.getElementById('pw-conf');
+        const pw_conf = document.getElementById('pw_conf').value;
         //nickname요소 가져옴
-        const nickname = document.getElementById('nickname');
+        const nickname = document.getElementById('nickname').value;
 
         //비밀번호 입력했을 때 나타나는 체크아이콘을 가져옴
         const pwCheck = document.getElementById('pw_check');
@@ -56,8 +58,8 @@ const signUp = () => {
         if (pwFlag === 1 && pwConfFlag === 1) {
             $.ajax({
                 type: "POST",
-                url: "/api/user/signUp",
-                data: {id: id, pwOne: pw,pwTwo: pw_conf,nickname:nickname},
+                url: "http://localhost:5000/api/user/signUp",
+                data: {'id': id, 'pwOne': pw,'pwTwo': pw_conf,'nickname':nickname},
                 success: (response) => {
                     console.log(response);
                 },

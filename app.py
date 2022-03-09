@@ -43,6 +43,7 @@ def home():
 
 @app.route('/api/user/signUp', methods=["POST"])
 def signUp():
+    print('!!@@')
     id = request.form['id']
     pwOne = request.form['pwOne']
     pwTwo = request.form['pwTwo']
@@ -55,6 +56,10 @@ def signUp():
 @app.route('/signin')
 def signIn():
     return render_template('signin.html')
+
+@app.route('/render')
+def render():
+    return render_template('signup.html')
 
 @app.route('/api/user/signIn', methods=['POST'])
 def signInJwt():
