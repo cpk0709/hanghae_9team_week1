@@ -2,9 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     //쿠키에서 캘린더아이디값 가져오기
     let calendarId = getCookieValue('calendarId');
-    // console.log(calendarId);
-
-    let postIdArray = [];
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         // plugins:['dayGridMonth','dayGridPlugin'],
@@ -55,16 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     for (let i = 0; i < postArray.length; i++) {
                         calendar.addEvent({
                             title: postArray[i]['content'],
-                            start: postArray[i]['datatime'],
-                            postId : postArray[i]['_id'],
-                            nickname : postArray[i]['nickname']
+                            start: postArray[i]['datatime']
+                            // postId : postArray[i]['_id'],
+                            // id:postArray[i]['_id']
+                            // nickname : postArray[i]['nickname']
                         })
-                        postIdArray.push(postArray[i]['_id']);
                     }
-
                 }
             })
-
         ],
         dateClick: function (info) {
             //Modal 띄워주는 처리
@@ -129,14 +124,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // const postDomArray = document.getElementsByClassName('fc-daygrid-event-harness');
-    // console.log(postDomArray);
-    // Array.from(postDomArray).map((el) => console.log(el));
-    // console.log(postIdArray);
-
     //완성된 캘린더 랜더
     calendar.render();
 });
+
 
 //새로운 포스트 생성
 function enter_sche() {

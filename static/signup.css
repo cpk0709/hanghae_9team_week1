@@ -73,7 +73,22 @@ button {
     font-weight: 700;
 }
 
-.pw_notCorect{
+a {
+    text-decoration: none;
+    width: 7rem;
+    height: 3rem;
+    border: none;
+    background-color: transparent;
+    color: #d6b98c;
+    border: 3px solid #d6b98c;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 2.5rem;
+}
+
+.pw_notCorect {
     display: block;
     color: #ff5858;
     font-size: 1.2rem;
@@ -81,7 +96,7 @@ button {
     margin-bottom: 1rem;
 }
 
-.pw_corect{
+.pw_corect {
     display: block;
     color: #52ff52;
     font-size: 1.2rem;
@@ -89,15 +104,15 @@ button {
     margin-bottom: 1rem;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-i.hidden{
+i.hidden {
     display: none;
 }
 
-.xi-check{
+.xi-check {
     color: #52ff52;
     font-size: 2rem;
     margin-left: 0.5rem;
