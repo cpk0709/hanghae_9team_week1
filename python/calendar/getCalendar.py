@@ -11,7 +11,7 @@ def getCalendarProcess(calendarId):
         result = []
 
         #calander id 에 해당하는 post 리스트를 만든다.
-        calendar = db.post.find({'calendarId': ObjectId(calendarId)})
+        calendar = db.post.find({'calendarId': calendarId})
         for sub in calendar:
             print(sub)
             sub['_id'] = str(sub['_id'])
