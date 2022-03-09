@@ -1,5 +1,3 @@
-// import dayGridPlugin from '../resources/lib/main/daygrid';
-
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
 
@@ -27,20 +25,40 @@ document.addEventListener('DOMContentLoaded', function () {
         //     calendar.unselect()
         // },
         events: [
-            {
-                title: 'event1',
-                start: '2022-03-01'
-            },
-            {
-                title: 'event2',
-                start: '2022-03-03',
-                end: '2022-03-05'
-            },
-            {
-                title: '대통령선거',
-                start: '2022-03-09T12:30:00',
-                allDay: false // will make the time show
-            }
+            // {
+            //     title: 'event1',
+            //     start: '2022-03-01'
+            // },
+            // {
+            //     title: 'event2',
+            //     start: '2022-03-03',
+            //     end: '2022-03-05'
+            // },
+            // {
+            //     title: '대통령선거',
+            //     start: '2022-03-09T12:30:00',
+            //     allDay: false // will make the time show
+            // }
+
+            $.ajax({
+                type: "GET",
+                url: "/api/calendar/get",
+                data: {calendarId: '62283409f8c7b626d7a4f691'},
+                success: function (response) {
+                    console.log(response.schedule);
+                    const postArray = response.schedule;
+                    for (let i = 0; i < postArray.length; i++) {
+                        calendar.addEvent({
+                            title: postArray[i]['content'],
+                            start: postArray[i]['datatime'],
+                            postId : postArray[i]['_id'],
+                            nickname : postArray[i]['nickname']
+                        })
+                    }
+
+                }
+            })
+
         ],
         dateClick: function (info) {
             //Modal 띄워주는 처리
@@ -102,51 +120,54 @@ document.addEventListener('DOMContentLoaded', function () {
 
             openModal();
 
-
         }
     });
-
+    // calendar.addEvent({
+    //     title:'test event',
+    //     start:'2022-03-27',
+    // });
     calendar.render();
 });
 
 //새로운 포스트 생성
 function enter_sche() {
     const nickName = 'nickname';
-    const calendarid = 'calId';
+    const calendarid = '62283409f8c7b626d7a4f691';
     const date = $('#selec_day').text();
     const sche = $('#sche_input').val();
     $.ajax({
         type: 'POST',
         url: '/api/calendar/post/new',
-        data: {calendarId:calendarid,nickname:nickName,dateTime: date, content: sche},
+        data: {calendarId: calendarid, nickname: nickName, dateTime: date, content: sche},
         success: function (response) {
-            console.log(response);
+            alert('등록완료!');
+
         }
     });
 }
 
 //포스트 수정
 function edit_sche() {
-    const calendarid = 'calId';
+    const calendarid = '62283409f8c7b626d7a4f691';
     const postid = 'postId';
     const date = $('#edit_day').text();
     const sche = $('#edit_input').val();
     $.ajax({
         type: 'POST',
         url: '/api/calendar/post/edit',
-        data: {calendarId:calendarid,postId:postid,dateTime: date, content: sche},
+        data: {calendarId: calendarid, postId: postid, dateTime: date, content: sche},
         success: function (response) {
             console.log(response);
         }
     });
 }
 
-function delete_sche(){
+function delete_sche() {
     const postId = 'postId';
-        $.ajax({
+    $.ajax({
         type: 'POST',
         url: '/api/calendar/post/delete',
-        data: {postId:postId},
+        data: {postId: postId},
         success: function (response) {
             console.log(response);
         }
