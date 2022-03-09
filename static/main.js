@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const td = info.dayEl;
             const modal = document.querySelector(".modal.enter");
             const overlay = modal.querySelector(".modal__overlay");
-            const closeBtn = modal.querySelector("#close_btn");
+            const closeBtn = modal.querySelector("#enter_close_btn");
             //modal의 class="hidden"을 삭제
             const openModal = () => {
                 modal.classList.remove("hidden");
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector("#edit_input").innerText = info.event.title;
             const modal = document.querySelector(".modal.remove");
             const overlay = modal.querySelector(".modal__overlay");
-            const closeBtn = modal.querySelector("#close_btn");
+            const closeBtn = modal.querySelector("#edit_close_btn");
             //modal의 class="hidden"을 삭제
             const openModal = () => {
                 modal.classList.remove("hidden");
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
     calendar.render();
 });
 
-//새로운 포스트 입력
+//새로운 포스트 생성
 function enter_sche() {
     const nickName = 'nickname';
     const calendarid = 'calId';
@@ -120,7 +120,7 @@ function enter_sche() {
         url: '/api/calendar/post/new',
         data: {calendarId:calendarid,nickname:nickName,dateTime: date, content: sche},
         success: function (response) {
-            alert(response);
+            console.log(response);
         }
     });
 }
@@ -136,7 +136,19 @@ function edit_sche() {
         url: '/api/calendar/post/edit',
         data: {calendarId:calendarid,postId:postid,dateTime: date, content: sche},
         success: function (response) {
-            alert(response);
+            console.log(response);
+        }
+    });
+}
+
+function delete_sche(){
+    const postId = 'postId';
+        $.ajax({
+        type: 'POST',
+        url: '/api/calendar/post/delete',
+        data: {postId:postId},
+        success: function (response) {
+            console.log(response);
         }
     });
 }
