@@ -62,9 +62,25 @@ def signIn():
 def render():
     return render_template('signup.html')
 
-@app.route('/main')
+@app.route('/main?calendarId="fdgfdsgfsd"')
 def main():
-    return render_template('main.html')
+    token = request.cookies.get('myToken')
+
+    # 토큰 유효성 체크
+    tokenMsg = tokenCheckProcess(token)
+    if tokenMsg['result'] == 'success':
+        calendarId = request.cookies.get('calendarId')
+        calendarIdList = request.cookies.get('calendarIdList')
+        dictCalendarIdList = json.loads(calendarIdList)  # str->dict
+        # 사용자 정보 가져오기
+        userInfo = getUserInfoProcess(tokenMsg['id'])
+        # return render_template('index.html', userInfo=userInfo, calendarIdList=dictCalendarIdList)
+        # return render_template('main.html?calendarId='+calendarId, userInfo=userInfo, calendarIdList=dictCalendarIdList)
+        return render_template('main.html', userInfo=userInfo, calendarIdList=dictCalendarIdList)
+    elif tokenMsg['result'] == 'fail' and tokenMsg['msg'] == '로그인 시간이 만료되었습니다.':
+        return render_template('index.html')
+    else:
+        return render_template('index.html')
 
 @app.route('/api/user/signIn', methods=['POST'])
 def signInJwt():

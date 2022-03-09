@@ -225,8 +225,18 @@ const getCookieValue = (key) => {
   return result;
 }
 
-//user profile 추가
-$(document).ready(function () {
-    let userId = getCookieValue('id');
-    $('#user-profile').text(userId + '님 안녕하세요!')
-})
+
+function createCalendar(){
+    let calendarTitle = prompt('캘린더 이름을 입력해 주세요');
+    let nickname = $('#user-nickname').text();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/calendar/new',
+        data: {'name': calendarTitle, 'owner': nickname},
+        success: function (response) {
+            console.log(response);
+            window.location.reload()
+        }
+    });
+}
