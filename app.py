@@ -1,6 +1,6 @@
 from python.calendar.createCalendar import createCalendarProcess
 from python.calendar.deleteCalendar import deleteCalendarProcess
-from python.calendar.getCalendarIdList import getCalendarIdListProcess
+from python.calendar.getCalendarIdList import getCalendarIdListProcess, getCalendarListProcess
 from python.calendar.getMyCalendarId import getMyCalendarIdProcess
 from python.post.createPost import createPostProcess
 from python.post.deletePost import deletePostProcess
@@ -73,6 +73,7 @@ def signInJwt():
         msg['calendarId'] = calendarId
 
         # 백엔드에서 쿠키 저장
+        resp.set_cookie('id', id)
         resp.set_cookie('myToken', msg['token'])
         resp.set_cookie('calendarId', calendarId)
         # 캘린더ID List를 쿠키로 보내기위해 str로 변환하는 과정(쿠키는 str만 가능)
@@ -84,6 +85,13 @@ def signInJwt():
         return resp
     else:
         return resp
+
+@app.route('/api/calendar/list', methods=['GET'])
+def getCalendarList():
+    id = request.form['id']
+    result = getCalendarListProcess(id)
+
+    return jsonify(result)
 
 
 @app.route('/api/calendar/get', methods=['GET'])

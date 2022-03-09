@@ -17,7 +17,7 @@ def getCalendarIdListProcess(_id): # 캘린더ID리스트만(기존버전)
         print(e)
         return {"msg": "error"}
 
-def getCalendarListProcess(id): #캘린더 개인/팀 - 캘린더ID/이름
+def getCalendarListProcess(id): #캘린더 개인,팀 - 캘린더ID/이름
     client = getConnection()
     db = client.ourschedule
 
@@ -30,20 +30,13 @@ def getCalendarListProcess(id): #캘린더 개인/팀 - 캘린더ID/이름
 
         # calendarList = list(db.team.find({'userid': ObjectId(_id)}, {'_id': 0, 'userid': 0})) # ObjectId타입
         MyCalendar = db.calendar.find_one({'owner': nickname, 'name':nickname+' 캘린더'})
-        MyCalendarId = str(MyCalendar['_id'])
-        personal = {}
-        # personal['_id'] = MyCalendarId
-        # personal['name'] = MyCalendar['name']
-        # print('personal:', personal)
 
-        # TeamCalendarList = list(db.team.find({'userid': ObjectId(_id)}, {'_id': 0, 'userid': 0}))
         CalendarList = list(db.calendar.find({'owner': nickname}))
-        print(CalendarList)
 
+        personal = {}
         team = {}
         teamList = []
         for cal in CalendarList:
-            # calenarInfo = db.calendar.find_one({'_id': ObjectId(i['calendarid'])})
             if cal['name'] == nickname+' 캘린더':
                 personal['_id'] = str(cal['_id'])
                 personal['name'] = cal['name']
@@ -55,7 +48,6 @@ def getCalendarListProcess(id): #캘린더 개인/팀 - 캘린더ID/이름
                 team['list'] = teamList
         result['personal'] = personal
         result['team'] = team
-        print(result)
 
         return result
 
