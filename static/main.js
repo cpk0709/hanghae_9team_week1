@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: '대통령선거',
                 start: '2022-03-09T12:30:00',
                 allDay: false // will make the time show
+
             }
         ],
         dateClick: function (info) {
@@ -204,3 +205,8 @@ const getCookieValue = (key) => {
   return result;
 }
 
+//user profile 추가
+$(document).ready(function () {
+    let userId = getCookieValue('id');
+    $('#user-profile').text(userId + '님 안녕하세요!')
+})
