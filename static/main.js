@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
+    //쿠키에서 캘린더아이디값 가져오기
+    let calendarId = getCookieValue('calendarId');
+    // console.log(calendarId);
+
+    let postIdArray = [];
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         // plugins:['dayGridMonth','dayGridPlugin'],
@@ -43,9 +48,9 @@ document.addEventListener('DOMContentLoaded', function () {
             $.ajax({
                 type: "GET",
                 url: "/api/calendar/get",
-                data: {calendarId: '62283409f8c7b626d7a4f691'},
+                data: {calendarId: calendarId},
                 success: function (response) {
-                    console.log(response.schedule);
+                    // console.log(response.schedule);
                     const postArray = response.schedule;
                     for (let i = 0; i < postArray.length; i++) {
                         calendar.addEvent({
@@ -54,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             postId : postArray[i]['_id'],
                             nickname : postArray[i]['nickname']
                         })
+                        postIdArray.push(postArray[i]['_id']);
                     }
 
                 }
@@ -122,17 +128,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
         }
     });
-    // calendar.addEvent({
-    //     title:'test event',
-    //     start:'2022-03-27',
-    // });
+
+    // const postDomArray = document.getElementsByClassName('fc-daygrid-event-harness');
+    // console.log(postDomArray);
+    // Array.from(postDomArray).map((el) => console.log(el));
+    // console.log(postIdArray);
+
+    //완성된 캘린더 랜더
     calendar.render();
 });
 
 //새로운 포스트 생성
 function enter_sche() {
+    let calendarId = getCookieValue('calendarId');
     const nickName = 'nickname';
-    const calendarid = '62283409f8c7b626d7a4f691';
+    const calendarid = calendarId;
     const date = $('#selec_day').text();
     const sche = $('#sche_input').val();
     $.ajax({
@@ -141,7 +151,7 @@ function enter_sche() {
         data: {calendarId: calendarid, nickname: nickName, dateTime: date, content: sche},
         success: function (response) {
             alert('등록완료!');
-
+            window.location.reload();
         }
     });
 }
