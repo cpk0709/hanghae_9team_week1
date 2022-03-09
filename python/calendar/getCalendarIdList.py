@@ -8,7 +8,6 @@ def getCalendarIdListProcess(_id): # 캘린더ID리스트만(기존버전)
     try:
         # calendarIds = list(db.team.find({'userid': _id}, {'_id': 0, 'userid': 0}))            # String타입
         calendarIdList = list(db.team.find({'userid': ObjectId(_id)}, {'_id': 0, 'userid': 0})) # ObjectId타입
-        print(calendarIdList)
         # calendarIdList = dict(db.team.find({'userid': ObjectId(_id)}, {'_id': 0, 'userid': 0}))
 
         return calendarIdList
