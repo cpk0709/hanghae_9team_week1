@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: '대통령선거',
                 start: '2022-03-09T12:30:00',
                 allDay: false // will make the time show
+
             }
         ],
         dateClick: function (info) {
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const td = info.dayEl;
             const modal = document.querySelector(".modal.enter");
             const overlay = modal.querySelector(".modal__overlay");
-            const closeBtn = modal.querySelector("#close_btn");
+            const closeBtn = modal.querySelector("#enter_close_btn");
             //modal의 class="hidden"을 삭제
             const openModal = () => {
                 modal.classList.remove("hidden");
@@ -87,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector("#edit_input").innerText = info.event.title;
             const modal = document.querySelector(".modal.remove");
             const overlay = modal.querySelector(".modal__overlay");
-            const closeBtn = modal.querySelector("#close_btn");
+            const closeBtn = modal.querySelector("#edit_close_btn");
             //modal의 class="hidden"을 삭제
             const openModal = () => {
                 modal.classList.remove("hidden");
@@ -109,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
     calendar.render();
 });
 
-//새로운 포스트 입력
+//새로운 포스트 생성
 function enter_sche() {
     const nickName = 'nickname';
     const calendarid = 'calId';
@@ -120,7 +121,7 @@ function enter_sche() {
         url: '/api/calendar/post/new',
         data: {calendarId:calendarid,nickname:nickName,dateTime: date, content: sche},
         success: function (response) {
-            alert(response);
+            console.log(response);
         }
     });
 }
@@ -136,7 +137,76 @@ function edit_sche() {
         url: '/api/calendar/post/edit',
         data: {calendarId:calendarid,postId:postid,dateTime: date, content: sche},
         success: function (response) {
-            alert(response);
+            console.log(response);
         }
     });
 }
+
+function delete_sche(){
+    const postId = 'postId';
+        $.ajax({
+        type: 'POST',
+        url: '/api/calendar/post/delete',
+        data: {postId:postId},
+        success: function (response) {
+            console.log(response);
+        }
+    });
+}
+
+
+// 네비게이션바 캘린더 리스트 받아온 후 보여주기
+$(document).ready(function () {
+    getCalendarList()
+})
+function getCalendarList(){
+    let userId = getCookieValue('id');
+    $.ajax({
+        type: 'GET',
+        url: '/api/calendar/list',
+        data: {'id':userId},
+        success: function (response) {
+            //personal calendar append
+            let temp_html = `
+                <li class="personal-sche">
+                    <a href="#" id="${response['personal']['_id']}">${response['personal']['name']}</a>
+                </li>
+            `
+            $('#calendar-nav').append(temp_html)
+
+            //team calendar append
+            for (const calendar of response['team']['list']) {
+                let temp_html = `
+                    <li class="personal-sche">
+                        <a href="#" id="${calendar['_id']}">${calendar['name']}</a>
+                    </li>
+                `
+                $('#calendar-nav').append(temp_html)
+            }
+        }
+    });
+}
+//get cookie function
+const getCookieValue = (key) => {
+  let cookieKey = key + "=";
+  let result = "";
+  const cookieArr = document.cookie.split(";");
+
+  for(let i = 0; i < cookieArr.length; i++) {
+    if(cookieArr[i][0] === " ") {
+      cookieArr[i] = cookieArr[i].substring(1);
+    }
+
+    if(cookieArr[i].indexOf(cookieKey) === 0) {
+      result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+      return result;
+    }
+  }
+  return result;
+}
+
+//user profile 추가
+$(document).ready(function () {
+    let userId = getCookieValue('id');
+    $('#user-profile').text(userId + '님 안녕하세요!')
+})

@@ -65,6 +65,7 @@ input:focus{
     width: 3rem;
     border-radius: 100%;
     background-color: pink;
+    color: darkred;
 }
 
 .logout-btn{

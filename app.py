@@ -43,6 +43,7 @@ def home():
 
 @app.route('/api/user/signUp', methods=["POST"])
 def signUp():
+    print('!!@@')
     id = request.form['id']
     pwOne = request.form['pwOne']
     pwTwo = request.form['pwTwo']
@@ -54,6 +55,14 @@ def signUp():
 @app.route('/signin')
 def signIn():
     return render_template('signin.html')
+
+@app.route('/render')
+def render():
+    return render_template('signup.html')
+
+@app.route('/main')
+def main():
+    return render_template('main.html')
 
 @app.route('/api/user/signIn', methods=['POST'])
 def signInJwt():
@@ -86,7 +95,9 @@ def logout():
 
 @app.route('/api/calendar/list', methods=['GET'])
 def getCalendarList():
-    id = request.args.get("id") #request.form['id']
+  
+    id = request.args.get('id')
+
     result = getCalendarListProcess(id)
 
     return jsonify(result)
