@@ -19,3 +19,22 @@ def getMyCalendarIdProcess(calendarIdList, nickname):
         return {"msg": "error"}
 
     client.close()
+
+def getMyCalendarIdProcess2(nickname):
+    client = getConnection()
+    db = client.ourschedule
+
+    try:
+        calendarId = ''
+        myCalendar = db.calendar.find_one({'name': nickname + ' 캘린더'})
+
+        if myCalendar is not None:
+            calendarId = str(myCalendar['_id'])
+
+        return calendarId
+
+    except Exception as e:
+        print(e)
+        return {"msg": "error"}
+
+    client.close()

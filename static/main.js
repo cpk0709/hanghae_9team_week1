@@ -226,3 +226,18 @@ const getCookieValue = (key) => {
   return result;
 }
 
+
+function createCalendar(){
+    let calendarTitle = prompt('캘린더 이름을 입력해 주세요');
+    let nickname = $('#user-nickname').text();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/calendar/new',
+        data: {'name': calendarTitle, 'owner': nickname},
+        success: function (response) {
+            console.log(response);
+            window.location.reload()
+        }
+    });
+}
