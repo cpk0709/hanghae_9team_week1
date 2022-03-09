@@ -1,7 +1,10 @@
+// import dayGridPlugin from '../resources/lib/main/daygrid';
+
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
+        // plugins:['dayGridMonth','dayGridPlugin'],
         initialView: 'dayGridMonth',
         locale: 'ko',
         selectable: true,
@@ -34,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 end: '2022-03-05'
             },
             {
-                title: 'event3',
+                title: '대통령선거',
                 start: '2022-03-09T12:30:00',
                 allDay: false // will make the time show
             }
@@ -108,14 +111,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //새로운 포스트 입력
 function enter_sche() {
+    const nickName = 'nickname';
+    const calendarid = 'calId';
     const date = $('#selec_day').text();
     const sche = $('#sche_input').val();
-    console.log(date);
-    console.log(sche);
     $.ajax({
         type: 'POST',
         url: '/api/calendar/post/new',
-        data: {date_giv: date, sche_give: sche},
+        data: {calendarId:calendarid,nickname:nickName,dateTime: date, content: sche},
         success: function (response) {
             alert(response);
         }
@@ -124,14 +127,14 @@ function enter_sche() {
 
 //포스트 수정
 function edit_sche() {
+    const calendarid = 'calId';
+    const postid = 'postId';
     const date = $('#edit_day').text();
     const sche = $('#edit_input').val();
-    console.log(date);
-    console.log(sche);
     $.ajax({
         type: 'POST',
         url: '/api/calendar/post/edit',
-        data: {date_giv: date, sche_give: sche},
+        data: {calendarId:calendarid,postId:postid,dateTime: date, content: sche},
         success: function (response) {
             alert(response);
         }
