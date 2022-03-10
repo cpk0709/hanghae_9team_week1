@@ -52,9 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     for (let i = 0; i < postArray.length; i++) {
                         calendar.addEvent({
                             title: postArray[i]['content'],
-                            start: postArray[i]['datatime']
-                            // postId : postArray[i]['_id'],
-                            // id:postArray[i]['_id']
+                            start: postArray[i]['datatime'],
+                            postId : postArray[i]['_id']
+                            // groupId:postArray[i]['_id']
                             // nickname : postArray[i]['nickname']
                         })
                     }
@@ -86,6 +86,13 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         //여기서 수정/삭제처리할 예정
         eventClick: function (info) {
+            // console.log(info);
+            // console.log(info.event.extendedProps);
+            const postIdHidden =  document.getElementById('postId');
+            console.log(info.event.extendedProps.postId);
+            //hidden타입 input태그에  value를 생성해서 넣고있음
+            postIdHidden.setAttribute('value',info.event.extendedProps.postId);
+
             //클릭한 일정의 시작날짜데이터를 dateInfo에 담아주고있음
             const dateInfo = info.el.fcSeg.eventRange.range.start;
             //자바스크립트 Date함수를 통해 date 인스턴스 생성
@@ -149,8 +156,11 @@ function enter_sche() {
 
 //포스트 수정
 function edit_sche() {
-    const calendarid = '62283409f8c7b626d7a4f691';
-    const postid = 'postId';
+    let calendarId = getCookieValue('calendarId');
+    const postId = document.getElementById('postId').value;
+
+    const calendarid = calendarId;
+    const postid = postId;
     const date = $('#edit_day').text();
     const sche = $('#edit_input').val();
     $.ajax({
@@ -159,18 +169,22 @@ function edit_sche() {
         data: {calendarId: calendarid, postId: postid, dateTime: date, content: sche},
         success: function (response) {
             console.log(response);
+            alert('수정하였습니다.');
+            window.location.reload();
         }
     });
 }
 
 function delete_sche() {
-    const postId = 'postId';
+    const postId = document.getElementById('postId').value;
     $.ajax({
         type: 'POST',
         url: '/api/calendar/post/delete',
         data: {postId: postId},
         success: function (response) {
             console.log(response);
+            alert('삭제하였습니다.');
+            window.location.reload();
         }
     });
 }
@@ -180,12 +194,13 @@ function delete_sche() {
 $(document).ready(function () {
     getCalendarList()
 })
-function getCalendarList(){
+
+function getCalendarList() {
     let userId = getCookieValue('id');
     $.ajax({
         type: 'GET',
         url: '/api/calendar/list',
-        data: {'id':userId},
+        data: {'id': userId},
         success: function (response) {
             //personal calendar append
             let temp_html = `
@@ -207,27 +222,28 @@ function getCalendarList(){
         }
     });
 }
+
 //get cookie function
 const getCookieValue = (key) => {
-  let cookieKey = key + "=";
-  let result = "";
-  const cookieArr = document.cookie.split(";");
+    let cookieKey = key + "=";
+    let result = "";
+    const cookieArr = document.cookie.split(";");
 
-  for(let i = 0; i < cookieArr.length; i++) {
-    if(cookieArr[i][0] === " ") {
-      cookieArr[i] = cookieArr[i].substring(1);
-    }
+    for (let i = 0; i < cookieArr.length; i++) {
+        if (cookieArr[i][0] === " ") {
+            cookieArr[i] = cookieArr[i].substring(1);
+        }
 
-    if(cookieArr[i].indexOf(cookieKey) === 0) {
-      result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
-      return result;
+        if (cookieArr[i].indexOf(cookieKey) === 0) {
+            result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+            return result;
+        }
     }
-  }
-  return result;
+    return result;
 }
 
 
-function createCalendar(){
+function createCalendar() {
     let calendarTitle = prompt('캘린더 이름을 입력해 주세요');
     let nickname = $('#user-nickname').text();
 
