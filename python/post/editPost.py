@@ -1,7 +1,7 @@
 from python.database.mongoDB import getConnection
 
 
-def editPostProcess(calendarId, dateTime, content, nickname):
+def editPostProcess(calendarId, dateTime, content, postId):
     client = getConnection()
     db = client.ourschedule
 
@@ -10,13 +10,13 @@ def editPostProcess(calendarId, dateTime, content, nickname):
             'calendarId': calendarId,
             'datatime':dateTime,
             'content': content,
-            'nickname': nickname
+            'postId': postId
         }
 
         db.post.insert_one(post)
 
         db.post.update_one({'calendarId': calendarId},
-                           {'$set': {'datatime': dateTime, 'content': content, 'nickname': nickname} })
+                           {'$set': {'datatime': dateTime, 'content': content, 'postId': postId} })
 
         result = {'postId': 'post edit is success'}
 

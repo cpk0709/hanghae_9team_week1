@@ -206,8 +206,8 @@ def editPost():
     calendarId = request.form['calendarId']
     dateTime = request.form['dateTime']
     content = request.form['content']
-    nickname = request.form['nickname']
-    result = editPostProcess(calendarId, dateTime, content, nickname)
+    postId = request.form['postId']
+    result = editPostProcess(calendarId, dateTime, content, postId)
     return jsonify(result)
 
 @app.route('/api/calendar/post/delete', methods=['POST'])
