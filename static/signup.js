@@ -56,7 +56,7 @@ const signUp = () => {
         if (pwFlag === 1 && pwConfFlag === 1) {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:5000/api/user/signUp",
+                url: "/api/user/signUp",
                 data: {'id': id, 'pwOne': pw,'pwTwo': pw_conf,'nickname':nickname},
                 success: (response) => {
                     alert('회원가입을 축하드립니다!');

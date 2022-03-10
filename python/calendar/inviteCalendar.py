@@ -12,7 +12,7 @@ def createInviteLinkProcess(calendarId):
         if db.calendar.find_one({'_id': ObjectId(calendarId)}) is None:
             return {'msg': 'not exist calendar'}
         else:
-            return {'link': 'http://localhost:5000/api/calendar/invite?calendarId=' + calendarId}
+            return {'link': 'http://52.78.196.40/api/calendar/invite?calendarId=' + calendarId}
 
 
     except Exception as e:
