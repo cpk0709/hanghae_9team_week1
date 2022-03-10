@@ -3,6 +3,7 @@ from python.calendar.deleteCalendar import deleteCalendarProcess
 from python.calendar.getCalendarIdList import getCalendarListProcess
 from python.calendar.getMyCalendarId import getMyCalendarIdProcess2
 from python.calendar.inviteCalendar import createInviteLinkProcess, inviteCalendarProcess
+from python.calendar.checkCalendarId import checkCalendarIdProcess
 from python.post.createPost import createPostProcess
 from python.post.deletePost import deletePostProcess
 from python.post.editPost import editPostProcess
@@ -35,9 +36,9 @@ def home():
         # return render_template('index.html', userInfo=userInfo)
         return render_template('main.html', userInfo=userInfo) #Jinja2에서 사용자정보 활용가능
     elif tokenMsg['result'] == 'fail' and tokenMsg['msg'] == '로그인 시간이 만료되었습니다.':
-        return render_template('index.html')
+        return render_template('signin.html')
     else:
-        return render_template('index.html')
+        return render_template('signin.html')
 
 
 @app.route('/api/user/signUp', methods=["POST"])
@@ -76,13 +77,16 @@ def main():
     token = request.cookies.get('myToken')
     tokenMsg = tokenCheckProcess(token)
     if tokenMsg['result'] == 'success':
-        # http://192.168.0.22:5000/main?calendarId=62273cd907b346c1eedbe9c5
-        calendarId = request.args.get("calendarId") #검증!!!
+        calendarId = request.args.get("calendarId")
         userInfo = getUserInfoProcess(tokenMsg['id'])
         if calendarId is not None and calendarId is not "":
-            resp = make_response(render_template('main.html', userInfo=userInfo, myCalendarId=calendarId))
-            # resp = make_response(render_template('main.html?calendarId='+calendarId, userInfo=userInfo, myCalendarId=calendarId))
-            resp.set_cookie('calendarId', calendarId)
+            # 캘린더ID가 DB에 존재하는지 조회
+            checkResult = checkCalendarIdProcess(calendarId)
+            if checkResult['msg']=="Existed":
+                resp = make_response(render_template('main.html', userInfo=userInfo, myCalendarId=calendarId))
+                resp.set_cookie('calendarId', calendarId)
+            else:
+                resp = make_response(render_template('error404.html'))
         else:
             resp = make_response(render_template('main.html', userInfo=userInfo))
         return resp
