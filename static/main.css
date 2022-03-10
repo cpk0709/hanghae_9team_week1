@@ -1,28 +1,28 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
-button{
+button {
     border: none;
     cursor: pointer;
 }
 
-input{
+input {
     border: none;
 }
 
-input:focus{
+input:focus {
     outline: none;
 }
 
 /*header*/
-.nav{
+.nav {
     width: 100vw;
     height: 100px;
     background-color: #284868;
@@ -35,7 +35,7 @@ input:focus{
     z-index: 1000;
 }
 
-.logo{
+.logo {
     display: flex;
     height: 100%;
     align-items: center;
@@ -48,12 +48,12 @@ input:focus{
     color: #d6b98c;
 }
 
-.logo > a > span{
+.logo > a > span {
     display: inline-block;
     transform: translateX(-10px);
 }
 
-.user-menu{
+.user-menu {
     width: 15%;
     display: flex;
     justify-content: space-around;
@@ -61,7 +61,7 @@ input:focus{
     line-height: 48px;
 }
 
-.user-profile{
+.user-profile {
     height: 3rem;
     width: 3rem;
     border-radius: 100%;
@@ -70,9 +70,9 @@ input:focus{
     text-align: center;
 }
 
-.logout-btn{
+.logout-btn {
     background-color: transparent;
-    border:3px solid #fff;
+    border: 3px solid #fff;
     border-radius: 15px;
     color: #fff;
     padding: 0 1rem;
@@ -83,7 +83,7 @@ input:focus{
 
 /*content*/
 
-.content{
+.content {
     height: 100vh;
     padding-top: 100px;
     display: flex;
@@ -92,7 +92,7 @@ input:focus{
     position: relative;
 }
 
-.side-nav{
+.side-nav {
     position: fixed;
     left: 0;
     top: 100px;
@@ -101,7 +101,41 @@ input:focus{
     background-color: #888888;
 }
 
-.side-nav > ul{
+#side-btn-wrap{
+    display: flex;
+    background-color: transparent;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+}
+
+#side-btn-wrap > button,#side-btn-wrap > ul > a > button{
+    font-size: 0.6em;
+    font-weight: 500;
+}
+
+#side-btn-wrap > ul > a > button{
+    transform: translateY(-2px);
+}
+
+.row.g-3{
+    position: absolute;
+    top:100%;
+    left: 10%;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#calendar-nav > button {
+    width: 40%;
+    font-weight: 700;
+    font-size: 1em;
+}
+
+.side-nav > ul {
     list-style: none;
     padding: 1rem 0;
     width: 100%;
@@ -109,25 +143,32 @@ input:focus{
     text-align: center;
 }
 
-.side-nav > ul > li{
+.side-nav > ul > li {
     font-size: 1.5rem;
-    margin: 1rem 0;
+    margin: 1rem 1rem;
+    border-radius: 5px;
+    background-color: #b9ad9b;
 }
 
-.side-nav > ul > li > a{
+.side-nav > ul > li:hover {
+    background-color: #D6B98C;
+    transition: all 0.3s;
+}
+
+.side-nav > ul > li > a {
     color: #fff;
 }
 
-#calendar{
+#calendar {
     width: 70vw;
     margin: auto 0 0 25%;
 }
 
 /*데이터 입력 modal css*/
-.modal{
+.modal {
     z-index: 1000;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    position : fixed;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -137,14 +178,14 @@ input:focus{
     align-items: center;
 }
 
-.modal__overlay{
-    background-color: rgba(0,0,0,0.6);
+.modal__overlay {
+    background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;
     position: absolute;
 }
 
-.modal__content{
+.modal__content {
     background-color: #fff;
     padding: 50px 100px;
     text-align: center;
@@ -153,22 +194,22 @@ input:focus{
     height: 50%;
     top: 0;
     border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.modal__content > h1{
+.modal__content > h1 {
     margin-bottom: 2rem;
 }
 
-#sche_input,#edit_input{
+#sche_input, #edit_input {
     width: 90%;
     height: 40%;
     resize: none;
@@ -179,34 +220,60 @@ input:focus{
     border-radius: 5px;
 }
 
-#sche_input:focus{
+#sche_input:focus {
     outline: none;
 }
 
-.modal_btn_wrap{
+.modal_btn_wrap {
     width: 100%;
     display: flex;
     justify-content: space-around;
 }
 
-.modal_btn{
+.modal_btn {
     padding: 0.5rem 2rem;
     font-size: 1.3rem;
     font-weight: 700;
     border-radius: 5px;
 }
 
-#enter_btn:hover, #edit_btn:hover{
+#enter_btn:hover, #edit_btn:hover {
     background-color: #90e2ff;
     transition: all 0.3s;
 }
 
-#delete_btn:hover{
+#delete_btn:hover {
     background-color: pink;
     transition: all 0.3s;
 }
 
-#close_btn:hover{
+#close_btn:hover {
     background-color: #bcbcbc;
     transition: all 0.3s;
+}
+
+@media screen and (max-width: 965px) {
+    .logout-btn {
+        background-color: transparent;
+        border: 1px solid #fff;
+        border-radius: 10px;
+        color: #fff;
+        padding: 0 0.5rem;
+        font-size: 0.5rem;
+        font-weight: 500;
+        line-height: 43px;
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .logout-btn {
+        background-color: transparent;
+        border: 1px solid #fff;
+        border-radius: 10px;
+        color: #fff;
+        padding: 0;
+        font-size: 0.4rem;
+        font-weight: 500;
+        line-height: 43px;
+    }
 }
