@@ -84,8 +84,10 @@ document.addEventListener('DOMContentLoaded', function () {
             closeBtn.addEventListener("click", closeModal);
             td.addEventListener("click", openModal());
         },
+
         //여기서 수정/삭제처리할 예정
         eventClick: function (info) {
+
             // console.log(info);
             // console.log(info.event.extendedProps);
             const postIdHidden =  document.getElementById('postId');
@@ -131,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
             calendar.render();
 
         }
+
     });
 
 
@@ -202,6 +205,7 @@ $(document).ready(function () {
 
 function getCalendarList() {
     let userId = getCookieValue('id');
+    let calendarIdByCookie = getCookieValue('calendarId');
     $.ajax({
         type: 'GET',
         url: '/api/calendar/list',
@@ -209,11 +213,20 @@ function getCalendarList() {
         success: function (response) {
             console.log(response)
             //personal calendar append
-            let temp_html = `
-                <li class="personal-sche">
-                    <a href="/main?calendarId=${response['personal']['_id']}">${response['personal']['name']}</a>
-                </li>
-            `
+            let calendarId = response['personal']['_id']
+            let temp_html = ``
+            if (calendarIdByCookie == calendarId){
+                temp_html = `
+                    <li class="personal-sche now-calendar">
+                        <a href="/main?calendarId=${calendarId}" id="${calendarId}">${response['personal']['name']}</a>
+                    </li>`
+            }else{
+                temp_html = `
+                        <li class="personal-sche">
+                            <a href="/main?calendarId=${calendarId}" id="${calendarId}">${response['personal']['name']}</a>
+                        </li>`
+            }
+
             $('#calendar-nav').append(temp_html)
 
             //team calendar append
