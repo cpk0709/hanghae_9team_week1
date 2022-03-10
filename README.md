@@ -7,7 +7,7 @@
 
 
 # 시연영상
-#### 업로드예정
+https://youtu.be/s7jprBzYvnI
 
 # 프로젝트 와이어프레임
 
