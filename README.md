@@ -21,12 +21,20 @@
 ![main_page](https://user-images.githubusercontent.com/48235884/157588793-cb204147-87dd-4e80-801c-5be2b67f531d.png)
 
 ## 포스트 업로드
+![postUp](https://user-images.githubusercontent.com/48235884/157646076-2d2ecf4a-f813-459c-9f78-c89b6fa41f13.png)
 
 ## 포스트 수정/삭제
+![postEdit](https://user-images.githubusercontent.com/48235884/157646137-7cccbae3-d12f-4a4e-8fcd-9029cc5fc12e.png)
 
-## 새로운 캘린더 생성
+## 팀 캘린더 생성
+![createTeamcal](https://user-images.githubusercontent.com/48235884/157646151-6295d8a6-27ba-4190-a828-2f1c5f0088af.png)
 
 ## 캘린더 초대링크
+![teamCalLink](https://user-images.githubusercontent.com/48235884/157646158-ed00b97a-0f7e-4d84-a47b-ae0da9bf6773.png)
+
+## 캘린더 삭제
+![teamCalDele](https://user-images.githubusercontent.com/48235884/157646174-b4348aad-c715-4541-9d82-9c279d78b3b4.png)
+
 
 # 프로젝트 기간
 + 2022.03.07 ~ 2022.03.10
