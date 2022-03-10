@@ -211,9 +211,9 @@ function getCalendarList() {
         url: '/api/calendar/list',
         data: {'id': userId},
         success: function (response) {
-            console.log(response)
+            // console.log(response)
             //personal calendar append
-            let calendarId = response['personal']['_id']
+            let calendarId = response['personal']['_id'] //------------
             let temp_html = ``
             if (calendarIdByCookie == calendarId){
                 temp_html = `
@@ -231,11 +231,17 @@ function getCalendarList() {
 
             //team calendar append
             for (const calendar of response['team']['list']) {
-                let temp_html = `
-                    <li class="personal-sche">
-                        <a href="/main?calendarId=${calendar['_id']}" >${calendar['name']}</a>
-                    </li>
-                `
+                if (calendarIdByCookie == calendar['_id']){
+                    temp_html = `
+                        <li class="personal-sche now-calendar">
+                            <a href="/main?calendarId=${calendar['_id']}" >${calendar['name']}</a>
+                        </li>`
+                }else{
+                    temp_html = `
+                        <li class="personal-sche">
+                            <a href="/main?calendarId=${calendar['_id']}" >${calendar['name']}</a>
+                        </li>`
+                }
                 $('#calendar-nav').append(temp_html)
             }
         }

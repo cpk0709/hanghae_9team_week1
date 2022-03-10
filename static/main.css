@@ -54,7 +54,7 @@ input:focus{
 }
 
 .user-menu{
-    width: 15%;
+    width: 16%;
     display: flex;
     justify-content: space-around;
     margin: 0 2rem;
@@ -63,10 +63,11 @@ input:focus{
 
 .user-profile{
     height: 3rem;
-    width: 3rem;
-    border-radius: 100%;
-    background-color: pink;
-    color: darkred;
+    width: 7rem; /*3*/
+    border-radius: 15px;
+    background-color: #e5c5c8;
+    color: #69325D;
+    font-weight: 700;
     text-align: center;
 }
 
@@ -121,6 +122,12 @@ input:focus{
 #calendar{
     width: 70vw;
     margin: auto 0 0 25%;
+}
+
+.now-calendar{
+    font-weight: 600;
+    color: #fff0cc;
+    text-shadow: 2px 2px 2px #22374f;
 }
 
 /*데이터 입력 modal css*/
@@ -202,7 +209,7 @@ input:focus{
 }
 
 #delete_btn:hover{
-    background-color: pink;
+    background-color: #fad3d9;
     transition: all 0.3s;
 }
 
