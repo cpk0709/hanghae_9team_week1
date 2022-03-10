@@ -9,7 +9,52 @@
 # 시연영상
 [youtube](https://youtu.be/s7jprBzYvnI)
 
-
+# 프로젝트 디렉토리 구조
+```
+python
+│   ├── calendar
+│   │   ├── checkCalendarId.py
+│   │   ├── createCalendar.py
+│   │   ├── deleteCalendar.py
+│   │   ├── getCalendar.py
+│   │   ├── getCalendarIdList.py
+│   │   ├── getMyCalendarId.py
+│   │   └── inviteCalendar.py
+│   ├── database
+│   │   └── mongoDB.py
+│   ├── post
+│   │   ├── createPost.py
+│   │   ├── deletePost.py
+│   │   ├── editPost.py
+│   │   └── updatePost.py
+│   └── user
+│       ├── getUserInfo.py
+│       ├── signIn.py
+│       ├── signUp.py
+│       ├── tokenCheck.py
+│       ├── tokenMiddleware.py
+│       └── user.py
+├── static
+│    ├── error404.css
+│    ├── main.css
+│    ├── main.js
+│    ├── script.js
+│    ├── signin.css
+│    ├── signIn.js
+│    ├── signup.css
+│    ├── signup.js
+│    └── style.css
+├── tamplates
+│    ├── error404.html
+│    ├── index.html
+│    ├── invite.html
+│    ├── main.html
+│    ├── signin.html
+│    └── signup.html
+├── .env
+├── app.py
+└── requirements.txt
+```
 # 프로젝트 와이어프레임
 
 ## 로그인 페이지
