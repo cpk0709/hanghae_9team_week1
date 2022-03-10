@@ -17,9 +17,16 @@
 ## 회원가입 페이지
 ![signup_page](https://user-images.githubusercontent.com/48235884/157588768-d7ad35af-7fb0-46eb-9652-cc138a96c011.png)
 
-##캘린더 페이지
+## 캘린더 페이지
 ![main_page](https://user-images.githubusercontent.com/48235884/157588793-cb204147-87dd-4e80-801c-5be2b67f531d.png)
 
+## 포스트 업로드
+
+## 포스트 수정/삭제
+
+## 새로운 캘린더 생성
+
+## 캘린더 초대링크
 
 # 프로젝트 기간
 + 2022.03.07 ~ 2022.03.10
