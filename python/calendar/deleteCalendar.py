@@ -16,7 +16,7 @@ def deleteCalendarProcess(calendarId):
         else:
             # 캘린더를 지우는 동시에 캘린더와 연관된 team, post를 모두 지운다
             db.team.delete_many({'calendarid': ObjectId(calendarId)})
-            db.post.delete_many({'calendarid': ObjectId(calendarId)})
+            db.post.delete_many({'calendarid': calendarId})
             db.calendar.delete_one({'_id': ObjectId(calendarId)})
 
             result = {'msg': 'success'}

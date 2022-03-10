@@ -29,28 +29,3 @@ def getCalendarProcess(calendarId):
 
 
     return result
-
-
-# mocking 데이터 생성 함수
-def mockdata():
-    client = getConnection()
-    db = client.ourschedule
-
-    doc1 = {
-        "date": 'dateTime',
-        "time": 'Time',
-        "content": 'Content',
-        "nickname": "woong",
-        "calendarid": ObjectId('11')
-    }
-    doc2 = {
-        "date": '1',
-        "time": '32',
-        "content": 'Content',
-        "nickname": "woong",
-        "calendarid": ObjectId('11'),
-    }
-    db.calendar.insert_one(doc1)
-    db.calendar.insert_one(doc2)
-
-    return
