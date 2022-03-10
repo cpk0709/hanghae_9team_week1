@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         calendar.addEvent({
                             title: postArray[i]['content'],
                             start: postArray[i]['datatime'],
-                            postId : postArray[i]['_id']
+                            postId: postArray[i]['_id']
                             // groupId:postArray[i]['_id']
                             // nickname : postArray[i]['nickname']
                         })
@@ -90,10 +90,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // console.log(info);
             // console.log(info.event.extendedProps);
-            const postIdHidden =  document.getElementById('postId');
+            const postIdHidden = document.getElementById('postId');
             console.log(info.event.extendedProps.postId);
             //hidden타입 input태그에  value를 생성해서 넣고있음
-            postIdHidden.setAttribute('value',info.event.extendedProps.postId);
+            postIdHidden.setAttribute('value', info.event.extendedProps.postId);
 
             //클릭한 일정의 시작날짜데이터를 dateInfo에 담아주고있음
             const dateInfo = info.el.fcSeg.eventRange.range.start;
@@ -215,12 +215,12 @@ function getCalendarList() {
             //personal calendar append
             let calendarId = response['personal']['_id'] //------------
             let temp_html = ``
-            if (calendarIdByCookie == calendarId){
+            if (calendarIdByCookie == calendarId) {
                 temp_html = `
                     <li class="personal-sche now-calendar">
                         <a href="/main?calendarId=${calendarId}" id="${calendarId}">${response['personal']['name']}</a>
                     </li>`
-            }else{
+            } else {
                 temp_html = `
                         <li class="personal-sche">
                             <a href="/main?calendarId=${calendarId}" id="${calendarId}">${response['personal']['name']}</a>
@@ -269,7 +269,8 @@ const getCookieValue = (key) => {
 
 
 function createCalendar() {
-    let calendarTitle = prompt('캘린더 이름을 입력해 주세요');
+    let calendarTitle = $('#calendarTitle').val()
+
     let nickname = $('#user-nickname').text();
     $.ajax({
         type: 'POST',
@@ -278,10 +279,15 @@ function createCalendar() {
         success: function (response) {
             console.log(response);
 
-            if(response['calendarId']) {
+            if (response['calendarId']) {
                 window.location.reload()
-            } else{
-              alert('생성 실패')
+            } else {
+                // alert('생성 실패')
+                Swal.fire({
+                    title: '생성에 실패하였습니다',
+                    icon: 'warning',
+                    confirmButtonText: '닫기'
+                })
             }
         }
 
@@ -298,10 +304,21 @@ function createInviteLink() {
         success: function (response) {
             console.log(response);
 
-            if(response['link']) {
-                alert('link: ' + response['link'] )
-            } else{
-              alert('생성 실패')
+            if (response['link']) {
+                // alert('link: ' + response['link'] );
+                Swal.fire({
+                    title: response['link'],
+                    text: '링크를 복사해주세요',
+                    icon: 'info',
+                    confirmButtonText: '닫기'
+                })
+            } else {
+                // alert('생성 실패')
+                Swal.fire({
+                    title: '생성에 실패하였습니다',
+                    icon: 'warning',
+                    confirmButtonText: '닫기'
+                })
             }
         }
 
