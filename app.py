@@ -29,7 +29,7 @@ def home():
     # 토큰 유효성 체크
     tokenMsg = tokenCheckProcess(token)
     if tokenMsg['result'] == 'success':
-        calendarId = request.cookies.get('calendarId')
+        calendarId = request.cookies.get('calendarId') # 현재 접속캘린더ID
         # 사용자 정보 가져오기
         userInfo = getUserInfoProcess(tokenMsg['id'])
         # return render_template('index.html', userInfo=userInfo)
@@ -71,17 +71,18 @@ def render():
     return render_template('signup.html')
 
 
-@app.route('/main', methods=['GET'])
+@app.route('/main', methods=['GET']) # 이상한숫자입력시
 def main():
     token = request.cookies.get('myToken')
     tokenMsg = tokenCheckProcess(token)
     if tokenMsg['result'] == 'success':
         # http://192.168.0.22:5000/main?calendarId=62273cd907b346c1eedbe9c5
-        calendarId = request.args.get("calendarId")
+        calendarId = request.args.get("calendarId") #검증!!!
         userInfo = getUserInfoProcess(tokenMsg['id'])
         if calendarId is not None:
             resp = make_response(render_template('main.html', userInfo=userInfo, myCalendarId=calendarId))
-            resp.set_cookie('myCalendarId', calendarId)
+            # resp = make_response(render_template('main.html?calendarId='+calendarId, userInfo=userInfo, myCalendarId=calendarId))
+            resp.set_cookie('calendarId', calendarId)
         else:
             resp = make_response(render_template('main.html', userInfo=userInfo))
         return resp
@@ -116,7 +117,7 @@ def logout():
     resp.delete_cookie('myToken')
     resp.delete_cookie('id')
     resp.delete_cookie('calendarId')
-    resp.delete_cookie('myCalendarId')
+    # resp.delete_cookie('myCalendarId')
     return resp
 
 @app.route('/api/calendar/list', methods=['GET'])
@@ -191,8 +192,8 @@ def editPost():
     calendarId = request.form['calendarId']
     dateTime = request.form['dateTime']
     content = request.form['content']
-    nickname = request.form['nickname']
-    result = editPostProcess(calendarId, dateTime, content, nickname)
+    postId = request.form['postId']
+    result = editPostProcess(calendarId, dateTime, content, postId)
     return jsonify(result)
 
 from python.database.mongoDB import getConnection

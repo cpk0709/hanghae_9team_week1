@@ -89,8 +89,12 @@ document.addEventListener('DOMContentLoaded', function () {
             closeBtn.addEventListener("click", closeModal);
             td.addEventListener("click", openModal());
         },
+
         //여기서 수정/삭제처리할 예정
         eventClick: function (info) {
+
+            console.log(info.event.extendedProps.postId);
+
             //클릭한 일정의 시작날짜데이터를 dateInfo에 담아주고있음
             const dateInfo = info.el.fcSeg.eventRange.range.start;
             //자바스크립트 Date함수를 통해 date 인스턴스 생성
@@ -127,7 +131,9 @@ document.addEventListener('DOMContentLoaded', function () {
             openModal();
 
         }
+
     });
+
 
     // const postDomArray = document.getElementsByClassName('fc-daygrid-event-harness');
     // console.log(postDomArray);
@@ -137,6 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //완성된 캘린더 랜더
     calendar.render();
 });
+
 
 //새로운 포스트 생성
 function enter_sche() {
@@ -191,17 +198,27 @@ $(document).ready(function () {
 })
 function getCalendarList(){
     let userId = getCookieValue('id');
+    let calendarIdByCookie = getCookieValue('calendarId');
     $.ajax({
         type: 'GET',
         url: '/api/calendar/list',
         data: {'id':userId},
         success: function (response) {
             //personal calendar append
-            let temp_html = `
-                <li class="personal-sche">
-                    <a href="#" id="${response['personal']['_id']}">${response['personal']['name']}</a>
-                </li>
-            `
+            let calendarId = response['personal']['_id']
+            let temp_html = ``
+            if (calendarIdByCookie == calendarId){
+                temp_html = `
+                    <li class="personal-sche now-calendar">
+                        <a href="/main?calendarId=${calendarId}" id="${calendarId}">${response['personal']['name']}</a>
+                    </li>`
+            }else{
+                temp_html = `
+                        <li class="personal-sche">
+                            <a href="/main?calendarId=${calendarId}" id="${calendarId}">${response['personal']['name']}</a>
+                        </li>`
+            }
+
             $('#calendar-nav').append(temp_html)
 
             //team calendar append

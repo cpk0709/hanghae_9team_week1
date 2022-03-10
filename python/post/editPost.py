@@ -1,24 +1,26 @@
 from python.database.mongoDB import getConnection
+import pymongo
+from bson import ObjectId
 
-
-def editPostProcess(calendarId, dateTime, content, nickname):
+def editPostProcess(calendarId, dateTime, content, postId):
     client = getConnection()
     db = client.ourschedule
-
+    result = {}
     try:
-        post = {
-            'calendarId': calendarId,
-            'datatime':dateTime,
-            'content': content,
-            'nickname': nickname
-        }
 
-        db.post.insert_one(post)
+        # dbResult = db.post.update_one({'_id': postId},
+        dbResult = db.post.update_one({'_id':  ObjectId(postId)},
+                           {'$set': {'datatime': dateTime, 'content': content }})
+        print(dbResult)
+        print(dbResult.matched_count > 0)
 
-        db.post.update_one({'calendarId': calendarId},
-                           {'$set': {'datatime': dateTime, 'content': content, 'nickname': nickname} })
+        if dbResult.matched_count>0:
+            result = {'postId': 'post edit is success'}
 
-        result = {'postId': 'post edit is success'}
+
+        post = list(db.post.find({}))
+        print(post)
+
 
 
 
