@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>OUR SCHEDULE</title>
     <link rel="icon" sizes="57x57" href="../static/resources/asset/android-icon-36x36.png">
-<!--  alert 꾸며주는 cdn  -->
+    <!--  alert 꾸며주는 cdn  -->
     <script src="../static/sweetalert2.all.min.js" defer></script>
     <!--bootStrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,6 +22,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+
+    <!--    create Calendar용 코드-->
+    <style>
+        .menu a {
+            cursor: pointer;
+        }
+
+        .menu .hide {
+            display: none;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $(".menu>a").click(function () {
+                $(this).next("ul").toggleClass("hide");
+            });
+        });
+    </script>
 
 
 </head>
@@ -42,8 +60,32 @@
     <div class="content">
         <div class="side-nav">
             <ul id="calendar-nav">
-                <button type="button" class="btn btn-outline-dark" onclick="createCalendar()">캘린더 추가</button>
-                <button type="button" class="btn btn-outline-dark" onclick="createInviteLink()">초대 링크 만들기</button>
+                <li id="side-btn-wrap">
+                    <button type="button" class="btn btn-outline-dark" onclick="createInviteLink()">초대 링크 만들기</button>
+                    <!--                <button type="button" class="btn btn-outline-dark" onclick="createCalendar()">캘린더 추가</button>-->
+
+
+                    <ul class="menu" style="margin-top: 3px"><a>
+                        <button type="button" class="btn btn-outline-dark">팀 캘린더 생성</button>
+                    </a>
+                        <ul class="hide">
+
+                            <form class="row g-3" style="margin-top: 5px">
+                                <div class="col-auto">
+                                    <label for="calendarTitle" class="visually-hidden">Password</label>
+                                    <input type="text" class="form-control" id="calendarTitle" placeholder="캘린더 제목">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-secondary mb-3" onclick="createCalendar()">
+                                        Confirm calendar
+                                    </button>
+                                </div>
+                            </form>
+
+                        </ul>
+                    </ul>
+                </li>
+
             </ul>
         </div>
 

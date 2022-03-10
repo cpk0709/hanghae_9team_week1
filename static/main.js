@@ -269,7 +269,7 @@ const getCookieValue = (key) => {
 
 
 function createCalendar() {
-    let calendarTitle = prompt('캘린더 이름을 입력해 주세요');
+    let calendarTitle = $('#calendarTitle').val()
 
     let nickname = $('#user-nickname').text();
     $.ajax({
