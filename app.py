@@ -1,4 +1,3 @@
-from flask import Flask, render_template, request, jsonify, redirect, make_response, url_for
 from python.calendar.createCalendar import createCalendarProcess
 from python.calendar.deleteCalendar import deleteCalendarProcess
 from python.calendar.getCalendarIdList import getCalendarListProcess
@@ -37,15 +36,9 @@ def home():
         return render_template('signin.html')
 
 
-@app.route('/api/user/signUp', methods=["POST"])
-def signUp():
-    id = request.form['id']
-    pwOne = request.form['pwOne']
-    pwTwo = request.form['pwTwo']
-    nickname = request.form['nickname']
-
-    msg = signUpProcess(id, pwOne, pwTwo, nickname)
-    return jsonify(msg)
+@app.route('/render')
+def render():
+    return render_template('signup.html')
 
 
 @app.route('/signin')
@@ -63,12 +56,7 @@ def signIn():
         return render_template('signin.html')
 
 
-@app.route('/render')
-def render():
-    return render_template('signup.html')
-
-
-@app.route('/main', methods=['GET']) 
+@app.route('/main', methods=['GET'])
 def main():
     token = request.cookies.get('myToken')
     tokenMsg = tokenCheckProcess(token)
@@ -92,6 +80,17 @@ def main():
         return resp
     else:
         return redirect(url_for("signIn"))
+
+
+@app.route('/api/user/signUp', methods=["POST"])
+def signUp():
+    id = request.form['id']
+    pwOne = request.form['pwOne']
+    pwTwo = request.form['pwTwo']
+    nickname = request.form['nickname']
+
+    msg = signUpProcess(id, pwOne, pwTwo, nickname)
+    return jsonify(msg)
 
 
 @app.route('/api/user/signIn', methods=['POST'])
