@@ -1,11 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>{{ info.msg }}</h1>
-    <a href="/main?calendarId={{ info.calendarId }}">여기로 이동</a>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Grayscale - Start Bootstrap Theme</title>
+        <link rel="icon" type="image/x-icon" href="/static/grayscale/assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/static/grayscale/css/styles.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+
+
+            $(document).ready(function () {
+                $('#success').hide()
+                $('#db-error').hide()
+                $('#not-exist-calendar').hide()
+                $('#already-join-team').hide()
+
+                if($('#index').text() == 'success'){
+                    $('#success').show()
+                }
+                if($('#index').text() == 'db-error'){
+                    $('#db-error').show()
+                }
+                if($('#index').text() == 'not-exist-calendar'){
+                    $('#not-exist-calendar').show()
+                }
+                if($('#index').text() == 'already-join-team'){
+                    $('#already-join-team').show()
+                }
+                console.log($('#index').text())
+            })
+        </script>
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="/main">메인으로 돌아가기</a>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+                <div class="d-flex justify-content-center" >
+                    <p value="{{ info.msg }}" id="index" hidden>{{ info.msg }}</p>
+                    <div class="text-center" id="success">
+                        <h1 class="mx-auto my-0 text-uppercase">환영합니다!</h1>
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">{{ info.calendarTitle }} 캘린더에 가입되셨습니다!</h2>
+                        <a class="btn btn-primary" href="/main?calendarId={{ info.calendarId }}">팀 캘린더 들어가기</a>
+                    </div>
+                    <div class="text-center" id="db-error" >
+                        <h1 class="mx-auto my-0 text-uppercase">죄송합니다...</h1>
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">서버 에러입니다</h2>
+                        <a class="btn btn-primary" href="/main">개인 캘린더로 돌아가기</a>
+                    </div>
+                    <div class="text-center" id="not-exist-calendar" >
+                        <h1 class="mx-auto my-0 text-uppercase">죄송합니다...</h1>
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">존재하지 않는 캘린더 입니다.</h2>
+                        <a class="btn btn-primary" href="/main">개인 캘린더로 돌아가기</a>
+                    </div>
+                    <div class="text-center" id="already-join-team" >
+                        <h1 class="mx-auto my-0 text-uppercase">죄송합니다...</h1>
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">이미 가입된 캘린더 입니다.</h2>
+                        <a class="btn btn-primary" href="/main">개인 캘린더로 돌아가기</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </body>
 </html>

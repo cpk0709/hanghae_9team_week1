@@ -25,10 +25,11 @@ def inviteCalendarProcess(calendarId, userId):
 
     try:
         user = db.user.find_one({'id': userId})
-        if db.calendar.find_one({'_id': ObjectId(calendarId)}) is None:
-            return {'msg': 'not exist calendar'}
+        calendar = db.calendar.find_one({'_id': ObjectId(calendarId)})
+        if calendar is None:
+            return {'msg': 'not-exist-calendar'}
         if db.team.find_one({'userid': user['_id'], 'calendarid':ObjectId(calendarId)}) is not None:
-            return {'msg': 'already join team'}
+            return {'msg': 'already-join-team'}
         else:
             team = {
                 'calendarid': ObjectId(calendarId),
@@ -38,6 +39,6 @@ def inviteCalendarProcess(calendarId, userId):
 
     except Exception as e:
         print(e)
-        return {'msg': 'db error'}
+        return {'msg': 'db-error'}
 
-    return {'msg': 'success', 'calendarId': calendarId}
+    return {'msg': 'success', 'calendarId': calendarId, 'calendarTitle': calendar['name']}
