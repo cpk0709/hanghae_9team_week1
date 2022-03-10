@@ -33,7 +33,7 @@
             </a>
         </div>
         <div class="user-menu">
-            <div class="user-profile" id="user-profile" ></div>
+            <div class="user-profile" id="user-nickname" >{{ userInfo.nickname }}</div>
             <button class="logout-btn" onclick=location.href='/api/user/logout' >로그아웃</button>
         </div>
     </div>
@@ -41,6 +41,7 @@
         <div class="side-nav">
             <ul id="calendar-nav">
                 <button type="button" class="btn btn-outline-dark" onclick="createCalendar()">캘린더 추가</button>
+                <button type="button" class="btn btn-outline-dark" onclick="createInviteLink()">초대 링크 만들기</button>
             </ul>
         </div>
         <div id='calendar'></div>
