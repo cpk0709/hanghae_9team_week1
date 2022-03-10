@@ -53,6 +53,7 @@ input:focus {
     transform: translateX(-10px);
 }
 
+
 .user-menu {
     width: 15%;
     display: flex;
@@ -63,10 +64,11 @@ input:focus {
 
 .user-profile {
     height: 3rem;
-    width: 3rem;
-    border-radius: 100%;
-    background-color: pink;
-    color: darkred;
+    width: 7rem; /*3*/
+    border-radius: 15px;
+    background-color: #e5c5c8;
+    color: #69325D;
+    font-weight: 700;
     text-align: center;
 }
 
@@ -164,6 +166,12 @@ input:focus {
     margin: auto 0 0 25%;
 }
 
+.now-calendar{
+    font-weight: 600;
+    color: #fff0cc;
+    text-shadow: 2px 2px 2px #22374f;
+}
+
 /*데이터 입력 modal css*/
 .modal {
     z-index: 1000;
@@ -242,8 +250,9 @@ input:focus {
     transition: all 0.3s;
 }
 
-#delete_btn:hover {
-    background-color: pink;
+
+#delete_btn:hover{
+    background-color: #fad3d9;
     transition: all 0.3s;
 }
 
@@ -251,6 +260,7 @@ input:focus {
     background-color: #bcbcbc;
     transition: all 0.3s;
 }
+
 
 @media screen and (max-width: 965px) {
     .logout-btn {
@@ -277,3 +287,4 @@ input:focus {
         line-height: 43px;
     }
 }
+

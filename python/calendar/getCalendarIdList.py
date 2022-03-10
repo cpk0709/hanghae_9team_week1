@@ -31,9 +31,8 @@ def getCalendarListProcess(id): #캘린더 개인,팀 - 캘린더ID/이름
             return {"msg": "ID is not existed"}
 
         teamCalendarList = list(db.team.find({'userid': ObjectId(_id)}, {'_id': 0, 'userid': 0})) # ObjectId타입
-        # myCalendar = db.calendar.find_one({'owner': nickname, 'name':nickname+' 캘린더'})
 
-        CalendarList = list(db.calendar.find({'owner': nickname}))
+        CalendarList = list(db.calendar.find({'owner': nickname})) #개인, 내가 만든 캘린더
 
         personal = {}
         team = {}
@@ -44,13 +43,13 @@ def getCalendarListProcess(id): #캘린더 개인,팀 - 캘린더ID/이름
             if cal['name'] == nickname+' 캘린더':
                 personal['_id'] = str(cal['_id'])
                 personal['name'] = cal['name']
-            # 개인캘린더 외에 내가 소유한 캘린더
+            # 개인캘린더 외에 내가 소유한 캘린더 ---- 없을때
             else:
                 teamEach = {}
                 teamEach['_id'] = str(cal['_id'])
                 teamEach['name'] = cal['name']
                 teamList.append(teamEach)
-                team['list'] = teamList
+                # team['list'] = teamList
             myOwnCalendar.append(str(cal['_id']))
         for cal in teamCalendarList:
             # 팀캘린더에 있는데 내소유 캘린더 아닌 것(공유캘린더)을 뒤에 추가
@@ -60,6 +59,7 @@ def getCalendarListProcess(id): #캘린더 개인,팀 - 캘린더ID/이름
                 teamEach['_id'] = str(ourCalendar['_id'])
                 teamEach['name'] = ourCalendar['name']
                 teamList.append(teamEach)
+        team['list'] = teamList
         result['personal'] = personal
         result['team'] = team
 
