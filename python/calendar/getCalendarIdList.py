@@ -1,21 +1,6 @@
 from python.database.mongoDB import getConnection
 from bson import ObjectId
 
-def getCalendarIdListProcess(_id): # 캘린더ID리스트만(기존버전)
-    client = getConnection()
-    db = client.ourschedule
-
-    try:
-        # calendarIds = list(db.team.find({'userid': _id}, {'_id': 0, 'userid': 0}))            # String타입
-        calendarIdList = list(db.team.find({'userid': ObjectId(_id)}, {'_id': 0, 'userid': 0})) # ObjectId타입
-        # calendarIdList = dict(db.team.find({'userid': ObjectId(_id)}, {'_id': 0, 'userid': 0}))
-
-        return calendarIdList
-
-    except Exception as e:
-        print(e)
-        return {"msg": "error"}
-
 def getCalendarListProcess(id): #캘린더 개인,팀 - 캘린더ID/이름
     client = getConnection()
     db = client.ourschedule
@@ -49,7 +34,6 @@ def getCalendarListProcess(id): #캘린더 개인,팀 - 캘린더ID/이름
                 teamEach['_id'] = str(cal['_id'])
                 teamEach['name'] = cal['name']
                 teamList.append(teamEach)
-                # team['list'] = teamList
             myOwnCalendar.append(str(cal['_id']))
         for cal in teamCalendarList:
             # 팀캘린더에 있는데 내소유 캘린더 아닌 것(공유캘린더)을 뒤에 추가

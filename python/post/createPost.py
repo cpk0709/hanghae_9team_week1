@@ -1,6 +1,6 @@
 from python.database.mongoDB import getConnection
 
-
+#포스트를 생성하는 서비스
 def createPostProcess(calendarId, dateTime, content, nickname):
     #get db connection
     client = getConnection()

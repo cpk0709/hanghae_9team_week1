@@ -1,8 +1,7 @@
 from bson import ObjectId
-
 from python.database.mongoDB import getConnection
 
-
+#포스트를 삭제하는 서비스
 def deletePostProcess(postId):
     # get db connection
     client = getConnection()
@@ -10,6 +9,7 @@ def deletePostProcess(postId):
 
     result = None
     try:
+        #포스트가 없다면
         if db.post.find_one({'_id': ObjectId(postId)}) is None:
             result = {'msg': 'not exist post'}
         else:

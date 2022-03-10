@@ -8,8 +8,9 @@ def signUpProcess(id, pwOne, pwTwo, nickName):
 
     client = getConnection()
     db = client.ourschedule
+
     try:
-        #중복된 아이디 닉네임 체크
+        #중복된 아이디 닉네임, 비밀번호 확인
         isUser = db.user.find_one({'id':id})
         if isUser is not None:
             return {'msg': 'exist id'}
@@ -28,6 +29,7 @@ def signUpProcess(id, pwOne, pwTwo, nickName):
         }
         db.user.insert_one(user)
 
+        #회원가입시 개인 캘린더 생성
         title = nickName + " 캘린더"
         re = createCalendarProcess(title, nickName)
         print(re)

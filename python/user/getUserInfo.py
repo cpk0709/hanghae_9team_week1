@@ -1,5 +1,6 @@
 from python.database.mongoDB import getConnection
 
+#db에서 userId를 통해 user정보를 찾아내는 함수
 def getUserInfoProcess(userId):
     client = getConnection()
     db = client.ourschedule
@@ -14,4 +15,3 @@ def getUserInfoProcess(userId):
         print(e)
         return {"msg": "error"}
 
-    client.close()
