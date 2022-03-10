@@ -2,9 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     //쿠키에서 캘린더아이디값 가져오기
     let calendarId = getCookieValue('calendarId');
-    // console.log(calendarId);
-
-    let postIdArray = [];
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         // plugins:['dayGridMonth','dayGridPlugin'],
@@ -56,15 +53,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         calendar.addEvent({
                             title: postArray[i]['content'],
                             start: postArray[i]['datatime'],
-                            postId : postArray[i]['_id'],
-                            nickname : postArray[i]['nickname']
+                            postId : postArray[i]['_id']
+                            // groupId:postArray[i]['_id']
+                            // nickname : postArray[i]['nickname']
                         })
-                        postIdArray.push(postArray[i]['_id']);
                     }
-
                 }
             })
-
         ],
         dateClick: function (info) {
             //Modal 띄워주는 처리
@@ -93,7 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
         //여기서 수정/삭제처리할 예정
         eventClick: function (info) {
 
+            // console.log(info);
+            // console.log(info.event.extendedProps);
+            const postIdHidden =  document.getElementById('postId');
             console.log(info.event.extendedProps.postId);
+            //hidden타입 input태그에  value를 생성해서 넣고있음
+            postIdHidden.setAttribute('value',info.event.extendedProps.postId);
 
             //클릭한 일정의 시작날짜데이터를 dateInfo에 담아주고있음
             const dateInfo = info.el.fcSeg.eventRange.range.start;
@@ -130,17 +130,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             openModal();
 
+            calendar.render();
+
         }
 
     });
 
 
-    // const postDomArray = document.getElementsByClassName('fc-daygrid-event-harness');
-    // console.log(postDomArray);
-    // Array.from(postDomArray).map((el) => console.log(el));
-    // console.log(postIdArray);
-
     //완성된 캘린더 랜더
+
+
     calendar.render();
 });
 
@@ -165,8 +164,11 @@ function enter_sche() {
 
 //포스트 수정
 function edit_sche() {
-    const calendarid = '62283409f8c7b626d7a4f691';
-    const postid = 'postId';
+    let calendarId = getCookieValue('calendarId');
+    const postId = document.getElementById('postId').value;
+
+    const calendarid = calendarId;
+    const postid = postId;
     const date = $('#edit_day').text();
     const sche = $('#edit_input').val();
     $.ajax({
@@ -175,18 +177,22 @@ function edit_sche() {
         data: {calendarId: calendarid, postId: postid, dateTime: date, content: sche},
         success: function (response) {
             console.log(response);
+            alert('수정하였습니다.');
+            window.location.reload();
         }
     });
 }
 
 function delete_sche() {
-    const postId = 'postId';
+    const postId = document.getElementById('postId').value;
     $.ajax({
         type: 'POST',
         url: '/api/calendar/post/delete',
         data: {postId: postId},
         success: function (response) {
             console.log(response);
+            alert('삭제하였습니다.');
+            window.location.reload();
         }
     });
 }
@@ -196,14 +202,16 @@ function delete_sche() {
 $(document).ready(function () {
     getCalendarList()
 })
-function getCalendarList(){
+
+function getCalendarList() {
     let userId = getCookieValue('id');
     let calendarIdByCookie = getCookieValue('calendarId');
     $.ajax({
         type: 'GET',
         url: '/api/calendar/list',
-        data: {'id':userId},
+        data: {'id': userId},
         success: function (response) {
+            console.log(response)
             //personal calendar append
             let calendarId = response['personal']['_id']
             let temp_html = ``
@@ -225,7 +233,7 @@ function getCalendarList(){
             for (const calendar of response['team']['list']) {
                 let temp_html = `
                     <li class="personal-sche">
-                        <a href="#" id="${calendar['_id']}">${calendar['name']}</a>
+                        <a href="/main?calendarId=${calendar['_id']}" >${calendar['name']}</a>
                     </li>
                 `
                 $('#calendar-nav').append(temp_html)
@@ -233,37 +241,65 @@ function getCalendarList(){
         }
     });
 }
+
 //get cookie function
 const getCookieValue = (key) => {
-  let cookieKey = key + "=";
-  let result = "";
-  const cookieArr = document.cookie.split(";");
+    let cookieKey = key + "=";
+    let result = "";
+    const cookieArr = document.cookie.split(";");
 
-  for(let i = 0; i < cookieArr.length; i++) {
-    if(cookieArr[i][0] === " ") {
-      cookieArr[i] = cookieArr[i].substring(1);
-    }
+    for (let i = 0; i < cookieArr.length; i++) {
+        if (cookieArr[i][0] === " ") {
+            cookieArr[i] = cookieArr[i].substring(1);
+        }
 
-    if(cookieArr[i].indexOf(cookieKey) === 0) {
-      result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
-      return result;
+        if (cookieArr[i].indexOf(cookieKey) === 0) {
+            result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
+            return result;
+        }
     }
-  }
-  return result;
+    return result;
 }
 
 
-function createCalendar(){
+function createCalendar() {
     let calendarTitle = prompt('캘린더 이름을 입력해 주세요');
     let nickname = $('#user-nickname').text();
-
     $.ajax({
         type: 'POST',
         url: '/api/calendar/new',
         data: {'name': calendarTitle, 'owner': nickname},
         success: function (response) {
             console.log(response);
-            window.location.reload()
+
+            if(response['calendarId']) {
+                window.location.reload()
+            } else{
+              alert('생성 실패')
+            }
         }
+
     });
 }
+
+function createInviteLink() {
+    let calendarId = getCookieValue('calendarId');
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/calendar/createLink',
+        data: {'calendarId': calendarId},
+        success: function (response) {
+            console.log(response);
+
+            if(response['link']) {
+                alert('link: ' + response['link'] )
+            } else{
+              alert('생성 실패')
+            }
+        }
+
+    });
+}
+
+

@@ -7,6 +7,12 @@ def editPostProcess(calendarId, dateTime, content, postId):
     db = client.ourschedule
     result = {}
     try:
+        post = {
+            'calendarId': calendarId,
+            'datatime':dateTime,
+            'content': content,
+            'postId': postId
+        }
 
         # dbResult = db.post.update_one({'_id': postId},
         dbResult = db.post.update_one({'_id':  ObjectId(postId)},
@@ -20,8 +26,6 @@ def editPostProcess(calendarId, dateTime, content, postId):
 
         post = list(db.post.find({}))
         print(post)
-
-
 
 
     except Exception as e:

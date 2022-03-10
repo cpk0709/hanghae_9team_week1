@@ -40,7 +40,7 @@
                     // -> 쿠키를 백엔드에서 저장으로 변경
                     // $.cookie('myToken', response['token'], {path: '/'});
                     // $.cookie('calendarId', response['calendarId'], {path: '/'});
-                    alert(response['msg'])
+                    // alert(response['msg'])
                     window.location.replace("/main")
                 } else {
                     console.log('로그인실패')
@@ -66,7 +66,7 @@
                 <input id="pw" class="input" type="password" placeholder="비밀번호">
                 <div class="btn-wrap">
                     <button onclick="signIn()">로그인</button>
-                    <button onclick="">회원가입</button>
+                    <a href="/render">회원가입</a>
                 </div>
             </div>
         </div>

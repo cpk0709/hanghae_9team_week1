@@ -2,7 +2,7 @@ from python.calendar.createCalendar import createCalendarProcess
 from python.calendar.deleteCalendar import deleteCalendarProcess
 from python.calendar.getCalendarIdList import getCalendarListProcess
 from python.calendar.getMyCalendarId import getMyCalendarIdProcess2
-from python.calendar.inviteCalendar import  createInviteLinkProcess
+from python.calendar.inviteCalendar import createInviteLinkProcess, inviteCalendarProcess
 from python.post.createPost import createPostProcess
 from python.post.deletePost import deletePostProcess
 from python.post.editPost import editPostProcess
@@ -79,7 +79,7 @@ def main():
         # http://192.168.0.22:5000/main?calendarId=62273cd907b346c1eedbe9c5
         calendarId = request.args.get("calendarId") #검증!!!
         userInfo = getUserInfoProcess(tokenMsg['id'])
-        if calendarId is not None:
+        if calendarId is not None and calendarId is not "":
             resp = make_response(render_template('main.html', userInfo=userInfo, myCalendarId=calendarId))
             # resp = make_response(render_template('main.html?calendarId='+calendarId, userInfo=userInfo, myCalendarId=calendarId))
             resp.set_cookie('calendarId', calendarId)
@@ -160,21 +160,16 @@ def createLink():
 
     return jsonify(result)
 
-@app.route('/api/calendar/invite', methods=['POST'])
+@app.route('/api/calendar/invite', methods=['GET'])
 def inviteCalendar():
-    # calendarId = request.args.get('calendarId')
+    calendarId = request.args.get('calendarId')
 
-    token = request.cookies.get('myToken')
-    print(token)
-    payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-    print(payload)
-    userId = payload['id']
-    print(userId)
+    userId = request.cookies.get('id')
+    print(id)
 
-    # result = createInviteLinkProcess(calendarId, userId)
+    result = inviteCalendarProcess(calendarId, userId)
 
-    # return jsonify(result)
-    return jsonify({'1':'1'})
+    return render_template('invite.html', info=result)
 
 @app.route('/api/calendar/post/new', methods=['POST'])
 def createPost():
