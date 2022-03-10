@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OUR SCHEDULE</title>
+    <link rel="icon" sizes="57x57" href="../static/resources/asset/android-icon-36x36.png">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <link rel="stylesheet" href="../static/signin.css"/>
+    <link rel="stylesheet" href="/static/signIn.js"/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+</head>
+<script>
+    function signIn() {
+        let id = $("#id").val()
+        let pw = $("#pw").val()
+
+        if (id == "") {
+            alert("아이디를 입력해주세요.")
+            $("#id").focus()
+            return;
+        }
+        if (pw == "") {
+            alert("비밀번호를 입력해주세요.")
+            $("#pw").focus()
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/api/user/signIn",
+            data: {
+                id: id,
+                pw: pw
+            },
+            success: function (response) {
+                if (response['result'] == 'success') {
+                    //토큰: 검증된 사람 ID, 유효시간
+                    //토큰을 받아서 브라우저의 쿠키에 저장, 이후 요청을 보낼때 계속 딸려감
+                    // console.log('로그인성공')
+                    // -> 쿠키를 백엔드에서 저장으로 변경
+                    // $.cookie('myToken', response['token'], {path: '/'});
+                    // $.cookie('calendarId', response['calendarId'], {path: '/'});
+                    // alert(response['msg'])
+                    window.location.replace("/main")
+                } else {
+                    console.log('로그인실패')
+                    alert(response['msg'])
+                }
+            }
+        });
+    }
+</script>
+<body>
+<div class="back-gr">
+    <div class="signin-wrap">
+        <div>
+            <h1>우리 스케줄관리,<br> 어디서할까?</h1>
+        </div>
+        <div>
+            <div class="logo">
+                <i class="xi-night"></i>
+                <span>UR SCHEDULE</span>
+            </div>
+            <div class="input-wrap">
+                <input id="id" class="input" type="text" placeholder="아이디">
+                <input id="pw" class="input" type="password" placeholder="비밀번호">
+                <div class="btn-wrap">
+                    <button onclick="signIn()">로그인</button>
+                    <a href="/render">회원가입</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,311 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+input {
+    border: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+/*header*/
+.nav {
+    width: 100vw;
+    height: 100px;
+    background-color: #284868;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    color: #d6b98c;
+    font-size: 2rem;
+    margin: 0 2rem;
+}
+
+.logo > a {
+    color: #d6b98c;
+}
+
+.logo > a > span {
+    display: inline-block;
+    transform: translateX(-10px);
+}
+
+
+.user-menu {
+    width: 15%;
+    display: flex;
+    justify-content: space-around;
+    margin: 0 2rem;
+    line-height: 48px;
+}
+
+.user-profile {
+    height: 3rem;
+    width: 7rem; /*3*/
+    border-radius: 15px;
+    background-color: #e5c5c8;
+    color: #69325D;
+    font-weight: 700;
+    text-align: center;
+}
+
+.logout-btn {
+    background-color: transparent;
+    border: 3px solid #fff;
+    border-radius: 15px;
+    color: #fff;
+    padding: 0 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 43px;
+}
+
+/*content*/
+
+.content {
+    height: 100vh;
+    padding-top: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.side-nav {
+    position: fixed;
+    left: 0;
+    top: 100px;
+    width: 20vw;
+    height: 100%;
+    background-color: #888888;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#side-btn-wrap{
+    display: flex;
+    background-color: transparent;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+}
+
+#side-btn-wrap > button,#side-btn-wrap > ul > a > button{
+    font-size: 0.6em;
+    font-weight: 500;
+}
+
+#side-btn-wrap > ul > a > button{
+    transform: translateY(-2px);
+}
+
+.row.g-3{
+    position: absolute;
+    top:100%;
+    left: 10%;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#calendar-nav > button {
+    width: 40%;
+    font-weight: 700;
+    font-size: 1em;
+}
+
+.side-nav > ul {
+    list-style: none;
+    padding: 1rem 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.side-nav > ul > li {
+    font-size: 1.5rem;
+    margin: 1rem 1rem;
+    border-radius: 5px;
+    background-color: #b9ad9b;
+}
+
+.side-nav > ul > li:hover {
+    background-color: #D6B98C;
+    transition: all 0.3s;
+}
+
+.side-nav > ul > li > a {
+    color: #fff;
+}
+
+#cal-del-btn{
+    position: absolute;
+    bottom: 20%;
+    width: 90%;
+    padding: 0.5rem 0;
+    background-color: #bd939a;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #fff;
+}
+
+#cal-del-btn:hover{
+    background-color: #ffb7c4;
+    transition: all 0.3s;
+}
+
+#calendar {
+    width: 70vw;
+    margin: auto 0 0 25%;
+}
+
+.now-calendar{
+    font-weight: 600;
+    color: #fff0cc;
+    text-shadow: 2px 2px 2px #22374f;
+}
+
+/*데이터 입력 modal css*/
+.modal {
+    z-index: 1000;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal__overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.modal__content {
+    background-color: #fff;
+    padding: 50px 100px;
+    text-align: center;
+    position: relative;
+    width: 40%;
+    height: 50%;
+    top: 0;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal__content > h1 {
+    margin-bottom: 2rem;
+}
+
+#sche_input, #edit_input {
+    width: 90%;
+    height: 40%;
+    resize: none;
+    padding: 0.5rem 1rem;
+    background-color: #eee;
+    font-size: 1.7em;
+    border: none;
+    border-radius: 5px;
+}
+
+#sche_input:focus {
+    outline: none;
+}
+
+.modal_btn_wrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.modal_btn {
+    padding: 0.5rem 2rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 5px;
+}
+
+#enter_btn:hover, #edit_btn:hover {
+    background-color: #90e2ff;
+    transition: all 0.3s;
+}
+
+
+#delete_btn:hover{
+    background-color: #fad3d9;
+    transition: all 0.3s;
+}
+
+#close_btn:hover {
+    background-color: #bcbcbc;
+    transition: all 0.3s;
+}
+
+
+@media screen and (max-width: 965px) {
+    .logout-btn {
+        background-color: transparent;
+        border: 1px solid #fff;
+        border-radius: 10px;
+        color: #fff;
+        padding: 0 0.5rem;
+        font-size: 0.5rem;
+        font-weight: 500;
+        line-height: 43px;
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .logout-btn {
+        background-color: transparent;
+        border: 1px solid #fff;
+        border-radius: 10px;
+        color: #fff;
+        padding: 0;
+        font-size: 0.4rem;
+        font-weight: 500;
+        line-height: 43px;
+    }
+}
+
