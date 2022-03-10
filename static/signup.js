@@ -35,10 +35,8 @@ const passwordConf = () => {
 
 const signUp = () => {
     const id = document.getElementById('id').value;
-    console.log('!!!');
     //아이디를 입력했다면
     if (id.value != '') {
-        console.log('@@@');
         //pw요소 가져옴
         const pw = document.getElementById('pw').value;
         //pw-conf요소 가져옴
@@ -61,7 +59,8 @@ const signUp = () => {
                 url: "http://localhost:5000/api/user/signUp",
                 data: {'id': id, 'pwOne': pw,'pwTwo': pw_conf,'nickname':nickname},
                 success: (response) => {
-                    console.log(response);
+                    alert('회원가입을 축하드립니다!');
+                    window.location.href='/signin';
                 },
             });
         } else {

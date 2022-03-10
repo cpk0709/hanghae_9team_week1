@@ -33,7 +33,7 @@
             </a>
         </div>
         <div class="user-menu">
-            <div class="user-profile" id="user-profile" ></div>
+            <div class="user-profile" id="user-nickname" >{{ userInfo.nickname }}</div>
             <button class="logout-btn" onclick=location.href='/api/user/logout' >로그아웃</button>
         </div>
     </div>
@@ -41,8 +41,10 @@
         <div class="side-nav">
             <ul id="calendar-nav">
                 <button type="button" class="btn btn-outline-dark" onclick="createCalendar()">캘린더 추가</button>
+                <button type="button" class="btn btn-outline-dark" onclick="createInviteLink()">초대 링크 만들기</button>
             </ul>
         </div>
+
         <div id='calendar'></div>
         <div class="modal enter hidden">
             <div class="modal__overlay"></div>
@@ -64,8 +66,9 @@
                 <h2 id="edit_day"></h2>
                 <textarea type="text" id="edit_input" placeholder="내용을 입력해주세요."></textarea>
                 <div class="modal_btn_wrap">
+                    <input type="hidden" id="postId">
                     <button onclick="edit_sche()" id="edit_btn" class="modal_btn">수정</button>
-                    <button onclick="delete_sche" id="delete_btn" class="modal_btn">삭제</button>
+                    <button onclick="delete_sche()" id="delete_btn" class="modal_btn">삭제</button>
                     <button id="edit_close_btn" class="modal_btn">닫기</button>
                 </div>
             </div>
