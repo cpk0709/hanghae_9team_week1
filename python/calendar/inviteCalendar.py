@@ -11,7 +11,7 @@ def createInviteLinkProcess(calendarId):
         if db.calendar.find_one({'_id': ObjectId(calendarId)}) is None:
             return {'msg': 'not exist calendar'}
         else:
-            return {'link': 'http://localhost:5000/api/calendar/invite'}
+            return {'link': 'http://localhost:5000/api/calendar/invite?calendarId=' + calendarId}
 
 
     except Exception as e:
@@ -24,12 +24,15 @@ def inviteCalendarProcess(calendarId, userId):
     db = client.ourschedule
 
     try:
+        user = db.user.find_one({'id': userId})
         if db.calendar.find_one({'_id': ObjectId(calendarId)}) is None:
             return {'msg': 'not exist calendar'}
+        if db.team.find_one({'userid': user['_id'], 'calendarid':ObjectId(calendarId)}) is not None:
+            return {'msg': 'already join team'}
         else:
             team = {
                 'calendarid': ObjectId(calendarId),
-                'userid': ObjectId(userId)
+                'userid': user['_id']
             }
             db.team.insert_one(team)
 
@@ -37,4 +40,4 @@ def inviteCalendarProcess(calendarId, userId):
         print(e)
         return {'msg': 'db error'}
 
-    return {'msg': 'success'}
+    return {'msg': 'success', 'calendarId': calendarId}

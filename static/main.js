@@ -128,10 +128,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             openModal();
 
+            calendar.render();
+
         }
     });
 
+
     //완성된 캘린더 랜더
+
+
     calendar.render();
 });
 
@@ -202,10 +207,11 @@ function getCalendarList() {
         url: '/api/calendar/list',
         data: {'id': userId},
         success: function (response) {
+            console.log(response)
             //personal calendar append
             let temp_html = `
                 <li class="personal-sche">
-                    <a href="#" id="${response['personal']['_id']}">${response['personal']['name']}</a>
+                    <a href="/main?calendarId=${response['personal']['_id']}">${response['personal']['name']}</a>
                 </li>
             `
             $('#calendar-nav').append(temp_html)
@@ -214,7 +220,7 @@ function getCalendarList() {
             for (const calendar of response['team']['list']) {
                 let temp_html = `
                     <li class="personal-sche">
-                        <a href="#" id="${calendar['_id']}">${calendar['name']}</a>
+                        <a href="/main?calendarId=${calendar['_id']}" >${calendar['name']}</a>
                     </li>
                 `
                 $('#calendar-nav').append(temp_html)
@@ -246,14 +252,41 @@ const getCookieValue = (key) => {
 function createCalendar() {
     let calendarTitle = prompt('캘린더 이름을 입력해 주세요');
     let nickname = $('#user-nickname').text();
-
     $.ajax({
         type: 'POST',
         url: '/api/calendar/new',
         data: {'name': calendarTitle, 'owner': nickname},
         success: function (response) {
             console.log(response);
-            window.location.reload()
+
+            if(response['calendarId']) {
+                window.location.reload()
+            } else{
+              alert('생성 실패')
+            }
         }
+
     });
 }
+
+function createInviteLink() {
+    let calendarId = getCookieValue('calendarId');
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/calendar/createLink',
+        data: {'calendarId': calendarId},
+        success: function (response) {
+            console.log(response);
+
+            if(response['link']) {
+                alert('link: ' + response['link'] )
+            } else{
+              alert('생성 실패')
+            }
+        }
+
+    });
+}
+
+
