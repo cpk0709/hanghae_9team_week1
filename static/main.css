@@ -101,6 +101,10 @@ input:focus {
     width: 20vw;
     height: 100%;
     background-color: #888888;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 #side-btn-wrap{
@@ -159,6 +163,23 @@ input:focus {
 
 .side-nav > ul > li > a {
     color: #fff;
+}
+
+#cal-del-btn{
+    position: absolute;
+    bottom: 20%;
+    width: 90%;
+    padding: 0.5rem 0;
+    background-color: #bd939a;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #fff;
+}
+
+#cal-del-btn:hover{
+    background-color: #ffb7c4;
+    transition: all 0.3s;
 }
 
 #calendar {
