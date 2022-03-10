@@ -23,7 +23,7 @@
           rel="stylesheet">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 
-    <!--    create Calendar용 코드-->
+    <!-- create Calendar용 코드-->
     <style>
         .menu a {
             cursor: pointer;
@@ -40,8 +40,6 @@
             });
         });
     </script>
-
-
 </head>
 <body>
 <div class="wrap">
@@ -62,8 +60,6 @@
             <ul id="calendar-nav">
                 <li id="side-btn-wrap">
                     <button type="button" class="btn btn-outline-dark" onclick="createInviteLink()">초대 링크 만들기</button>
-                    <!--                <button type="button" class="btn btn-outline-dark" onclick="createCalendar()">캘린더 추가</button>-->
-
 
                     <ul class="menu" style="margin-top: 3px"><a>
                         <button type="button" class="btn btn-outline-dark">팀 캘린더 생성</button>
@@ -122,13 +118,5 @@
     </div>
 
 </div>
-{% if userInfo is defined %}
-<!--    <h3 style="text-align: center">_id: {{ userInfo._id }}</h3>-->
-<!--    <h3 style="text-align: center"> id: {{ userInfo.id }}</h3>-->
-<!--    <h3 style="text-align: center"> nickname: {{ userInfo.nickname }}</h3>-->
-<!--    <h3 style="text-align: center"> calendarId: {{ calendarId }}</h3>-->
-{% else %}
-<!--    <h6 style="text-align: center">로그인후 사용가능합니다.</h6>-->
-{% endif %}
 </body>
 </html>

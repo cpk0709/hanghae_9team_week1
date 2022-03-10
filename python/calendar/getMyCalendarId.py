@@ -1,24 +1,4 @@
 from python.database.mongoDB import getConnection
-from bson import ObjectId
-
-def getMyCalendarIdProcess(calendarIdList, nickname):
-    client = getConnection()
-    db = client.ourschedule
-
-    try:
-        calendarId = ''
-        for cal in calendarIdList:
-            myCalendarId = db.calendar.find_one({'_id': ObjectId(cal['calendarid']), 'name': nickname + ' 캘린더'})
-            if myCalendarId is not None:
-                calendarId = str(myCalendarId['_id'])
-
-        return calendarId
-
-    except Exception as e:
-        print(e)
-        return {"msg": "error"}
-
-    client.close()
 
 def getMyCalendarIdProcess2(nickname):
     client = getConnection()
@@ -26,10 +6,13 @@ def getMyCalendarIdProcess2(nickname):
 
     try:
         calendarId = ''
+        #개인 캘린더인 문자열을 찾아 db에서 조회
         myCalendar = db.calendar.find_one({'name': nickname + ' 캘린더'})
 
         if myCalendar is not None:
             calendarId = str(myCalendar['_id'])
+        else:
+            return{'msg':'no calendar'}
 
         return calendarId
 
@@ -37,4 +20,3 @@ def getMyCalendarIdProcess2(nickname):
         print(e)
         return {"msg": "error"}
 
-    client.close()
