@@ -231,12 +231,12 @@ function getCalendarList() {
 
             //team calendar append
             for (const calendar of response['team']['list']) {
-                if (calendarIdByCookie == calendar['_id']){
+                if (calendarIdByCookie == calendar['_id']) {
                     temp_html = `
                         <li class="personal-sche now-calendar">
                             <a href="/main?calendarId=${calendar['_id']}" >${calendar['name']}</a>
                         </li>`
-                }else{
+                } else {
                     temp_html = `
                         <li class="personal-sche">
                             <a href="/main?calendarId=${calendar['_id']}" >${calendar['name']}</a>
@@ -325,4 +325,17 @@ function createInviteLink() {
     });
 }
 
+function delete_calendar() {
+    let calendarId = getCookieValue('calendarId');
+    $.ajax({
+        type: 'POST',
+        url: '/api/calendar/delete',
+        data: {calendarId: calendarId},
+        success: function (response) {
+            console.log(response);
+            alert('삭제하였습니다.');
+            window.location.reload();
+        }
+    });
+}
 
