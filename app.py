@@ -4,21 +4,18 @@ from python.calendar.getCalendarIdList import getCalendarListProcess
 from python.calendar.getMyCalendarId import getMyCalendarIdProcess2
 from python.calendar.inviteCalendar import createInviteLinkProcess, inviteCalendarProcess
 from python.calendar.checkCalendarId import checkCalendarIdProcess
+from python.calendar.getCalendar import getCalendarProcess
 from python.post.createPost import createPostProcess
 from python.post.deletePost import deletePostProcess
 from python.post.editPost import editPostProcess
 from python.user.signUp import signUpProcess
-from datetime import datetime, timedelta
-from python.calendar.getCalendar import getCalendarProcess
-import jwt
-from flask import Flask, render_template, request, jsonify, redirect, make_response, json, url_for
-from python.user.signUp import signUpProcess
 from python.user.signIn import signInProcess
 from python.user.tokenCheck import tokenCheckProcess
 from python.user.getUserInfo import getUserInfoProcess
-from python.user.tokenMiddleware import token_required
-from bson import json_util
+
 import os
+from flask import Flask, render_template, request, jsonify, redirect, make_response, url_for
+
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -214,11 +211,6 @@ def deletePost():
         return jsonify(result)
     else:
         return {"result": "no token"}
-
-@app.route('/test')
-@token_required
-def tokenMiddlewareTest():
-    return render_template('main.html')
 
 # 라우터에서 토큰확인하는 쌤플코드
 @app.route('/sample')

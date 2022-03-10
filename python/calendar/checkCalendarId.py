@@ -1,6 +1,7 @@
 from python.database.mongoDB import getConnection
 from bson import ObjectId
 
+#캘린더의 Id가 db에 속해있는지 확인하는 함수
 def checkCalendarIdProcess(calendarId):
     client = getConnection()
     db = client.ourschedule

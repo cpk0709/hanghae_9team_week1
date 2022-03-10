@@ -1,7 +1,6 @@
-from bson import ObjectId
-
 from python.database.mongoDB import getConnection
 
+#calendarId에 속하는 모든 post들을 조회하는 서비스
 def getCalendarProcess(calendarId):
     # get db connection
     client = getConnection()
