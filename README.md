@@ -86,7 +86,7 @@ python
 + 2022.03.07 ~ 2022.03.10
 
 # 개발툴
-+ Server : AWS EC@
++ Server : AWS EC2
 + Framework : Flask(Python)
 + Database : MongoDB
 + View : HTML,CSS,Javascript
